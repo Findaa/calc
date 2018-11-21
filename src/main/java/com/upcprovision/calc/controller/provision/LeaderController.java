@@ -1,10 +1,11 @@
 package com.upcprovision.calc.controller.provision;
 
-import com.upcprovision.calc.model.CustomUserDetails;
-import com.upcprovision.calc.repos.UserService;
-import com.upcprovision.calc.services.DealsServices;
-import com.upcprovision.calc.services.LeaderService;
-import com.upcprovision.calc.services.TotalSales;
+import com.upcprovision.calc.repos.provision.LeaderService;
+import com.upcprovision.calc.security.CustomUserDetails;
+import com.upcprovision.calc.security.UserService;
+import com.upcprovision.calc.services.provision.DealsServices;
+import com.upcprovision.calc.services.provision.ProvisionTotal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,25 +16,23 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LeaderController {
 
-
-    public LeaderController(TotalSales totalSales, DealsServices dealsServices, LeaderService leaderService, UserService userService) {
-        this.totalSales = totalSales;
+    @Autowired
+    public LeaderController(ProvisionTotal provisionTotal, DealsServices dealsServices, LeaderService leaderService, UserService userService) {
+        this.provisionTotal = provisionTotal;
         this.dealsServices = dealsServices;
         this.leaderService = leaderService;
         this.userService = userService;
     }
+
     private LeaderService leaderService;
-    private TotalSales totalSales;
+    private ProvisionTotal provisionTotal;
     private DealsServices dealsServices;
     private UserService userService;
 
     public int getLeaderId() {
         CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getLeaderid();
-
     }
-
-
 
     @GetMapping("/leader/app")
     public String viewLeaderapp() {
@@ -51,13 +50,13 @@ public class LeaderController {
         System.out.println(log+": stringLeaderUsername");
         session.setAttribute("list", dealsServices.getByLog(log));
         session.setAttribute("numerlog", log);
-        session.setAttribute("total", totalSales.getTotalSales(totalSales.findAllByLog(log)));
-        return "redirect:/leader/getDealsdone";
+        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(log)));
+        return "redirect:/leader/getdealsdone";
     }
 
-    @GetMapping("/leader/getDealsdone")
+    @GetMapping("/leader/getdealsdone")
     public String getDealsDone() {
-        return "leader/getDealsdone";
+        return "leader/getdealsdone";
     }
 
     @PostMapping("/leader/getteam")
@@ -67,7 +66,7 @@ public class LeaderController {
         System.out.println("userService.listAllByLeader: " + userService.findAllByLeaderid(id));
         session.setAttribute("list", leaderService.getTeamDeals(id));
         session.setAttribute("numerlog", id);
-        session.setAttribute("total", totalSales.getTotalSales(leaderService.getTeamDeals(id)));
+        session.setAttribute("total", provisionTotal.getTotalSales(leaderService.getTeamDeals(id)));
         return "redirect:/leader/teamresult";
     }
 

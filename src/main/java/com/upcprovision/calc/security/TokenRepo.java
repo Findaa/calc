@@ -1,7 +1,5 @@
-package com.upcprovision.calc.repos;
+package com.upcprovision.calc.security;
 
-import antlr.Token;
-import com.upcprovision.calc.model.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

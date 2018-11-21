@@ -23,6 +23,8 @@
         <form:form method="get" action="register">
             <input type="submit" value="Zarejestruj"></form:form>
     </sec:authorize><br/>
+    Test acc: test/131<br/>
+
 </div>
 <div class="relation">
     <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">

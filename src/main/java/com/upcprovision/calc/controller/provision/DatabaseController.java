@@ -1,36 +1,33 @@
 package com.upcprovision.calc.controller.provision;
 
 import com.upcprovision.calc.dto.DealsDTO;
-import com.upcprovision.calc.model.CustomUserDetails;
+import com.upcprovision.calc.security.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Deals;
-import com.upcprovision.calc.repos.UserRepo;
-import com.upcprovision.calc.services.ConvertService;
-import com.upcprovision.calc.services.DealsServices;
-import com.upcprovision.calc.services.TotalSales;
-import com.upcprovision.calc.services.UtargCalc;
+import com.upcprovision.calc.services.provision.ConvertService;
+import com.upcprovision.calc.services.provision.DealsServices;
+import com.upcprovision.calc.services.provision.ProvisionTotal;
+import com.upcprovision.calc.services.provision.ProvisionSingle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class DatabaseController {
 
-    public DatabaseController(UtargCalc utargCalc, TotalSales totalSales, DealsServices dealsServices, ConvertService convertService, UserRepo userRepo) {
-        this.utargCalc = utargCalc;
-        this.totalSales = totalSales;
+    @Autowired
+    public DatabaseController(ProvisionSingle provisionSingle, ProvisionTotal provisionTotal, DealsServices dealsServices, ConvertService convertService) {
+        this.provisionSingle = provisionSingle;
+        this.provisionTotal = provisionTotal;
         this.dealsServices = dealsServices;
         this.convertService = convertService;
-        this.userRepo = userRepo;
     }
 
-    private UserRepo userRepo;
-    private UtargCalc utargCalc;
-    private TotalSales totalSales;
+    private ProvisionSingle provisionSingle;
+    private ProvisionTotal provisionTotal;
     private DealsServices dealsServices;
     private ConvertService convertService;
 
@@ -48,30 +45,24 @@ public class DatabaseController {
 
     @PostMapping("/useradd")
     public String postUserAdd(@ModelAttribute("deal") DealsDTO deal, HttpSession session) {
-        dealsServices.add(convertService.convert(deal, utargCalc));
+        dealsServices.add(convertService.convert(deal, provisionSingle));
         session.setAttribute("list", dealsServices.getByLog(getUsername()));
         session.setAttribute("numerlog", getUsername());
-        session.setAttribute("total", totalSales.getTotalSales(totalSales.findAllByLog(getUsername())));
-        return "redirect:/app/getDealsdone";
-  }
-
+        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername())));
+        return "redirect:/app/getdealsdone";
+    }
 
     @GetMapping("/app/getdeals")
     public String getDeals(HttpSession session) {
         session.setAttribute("list", dealsServices.getByLog(getUsername()));
         session.setAttribute("numerlog", getUsername());
-        session.setAttribute("total", totalSales.getTotalSales(totalSales.findAllByLog(getUsername())));
-        return "redirect:/app/getDealsdone";
+        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername())));
+        return "redirect:/app/getdealsdone";
     }
 
-    @GetMapping("/app/getDealsdone")
-    public String getDealsDoneProcess() {
-        return "redirect:/app/dealslist";
-    }
-
+    @GetMapping("/app/getdealsdone")
+    public String getDealsDoneProcess() { return "redirect:/app/dealslist"; }
 
     @GetMapping("/app/dealslist")
-    public String getDealsDone() {
-        return "getDealsdone";
-    }
+    public String getDealsDone() { return "getdealsdone"; }
 }

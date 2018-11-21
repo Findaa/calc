@@ -1,7 +1,6 @@
 package com.upcprovision.calc.controller.tickets;
 
 
-import com.upcprovision.calc.dto.TicketDto;
 import com.upcprovision.calc.repos.tickets.TicketServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +31,8 @@ public class TicketAppController {
         try {
             session.setAttribute("ticketlist", ticketServices.processTicketList(ticketServices.getTicket(id)));
             System.out.println(ticketServices.getTicket(id));
-        }catch (NullPointerException npe){}
+        }catch (NullPointerException npe){
+        }
         return "redirect:/ticketapp/get";
     }
-
-    @GetMapping("/ticketapp/get")
-    public String viewTicketList(){
-        return "ticket/get";
-    }
-
 }

@@ -1,38 +1,43 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.services.tickets;
 
 
-import com.upcprovision.calc.model.CustomUserDetails;
-import com.upcprovision.calc.dto.TicketDto;
+import com.upcprovision.calc.security.CustomUserDetails;
+import com.upcprovision.calc.dto.TicketDTO;
 import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;
 import com.upcprovision.calc.repos.tickets.TicketRepo;
 import com.upcprovision.calc.repos.tickets.TicketServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
 public class TicketServicesImpl implements TicketServices {
+
     private TicketRepo ticketRepo;
-    public TicketServicesImpl(TicketRepo ticketRepo) {
-        this.ticketRepo = ticketRepo;
-    }
+
     public String getUsername() {
         CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String name = user.getUsername();
         return name;
     }
 
+    @Autowired
+    public TicketServicesImpl(TicketRepo ticketRepo) {
+        this.ticketRepo = ticketRepo;
+    }
 
     @Override
-    public List<TicketDto> processTicketList(List<Ticket> ticketList) {
-        List<TicketDto> ticketDtoList = new ArrayList<>();
+    public List<TicketDTO> processTicketList(List<Ticket> ticketList) {
+        List<TicketDTO> ticketDTOList = new ArrayList<>();
 
         for (int x = 0; x < ticketList.size(); x++) {
-            TicketDto ticketDto = new TicketDto();
+            TicketDTO ticketDto = new TicketDTO();
 
             Ticket ticket = ticketList.get(x);
             ArrayList<TicketStatus> ticketStatuses = ticket.getTicketStatuses();
@@ -56,11 +61,10 @@ public class TicketServicesImpl implements TicketServices {
             } else {
                 ticketDto.setClosedString("Otwarte");
             }
-            ticketDtoList.add(ticketDto);
+            ticketDTOList.add(ticketDto);
         }
-        return ticketDtoList;
+        return ticketDTOList;
     }
-
 
     @Override
     public List<Ticket> getTicket(String id) {
@@ -112,19 +116,13 @@ public class TicketServicesImpl implements TicketServices {
         List<Ticket> all = getAll();
         ArrayList<Ticket> returnList = new ArrayList<>();
 
-        for (int x = 0; x < all.size(); x++) {
-
+        for (Ticket anAll : all) {
             TicketStatus ticketStatus;
             List<TicketStatus> ticketStatuses;
-            Ticket ticket = all.get(x);
-
-            ticketStatuses = ticket.getTicketStatuses();
-
+            ticketStatuses = anAll.getTicketStatuses();
             ticketStatus = ticketStatuses.get(0);
 
-            if (ticketStatus.getUsername().equals(id)) {
-                returnList.add(ticket);
-            }
+            if (ticketStatus.getUsername().equals(id)) { returnList.add(anAll); }
         }
         return returnList;
     }
@@ -141,20 +139,30 @@ public class TicketServicesImpl implements TicketServices {
         for (int i = 0; i < ttid.length; i++) {
             ticketnumber.append(ttid[i]);
         }
+
         Long ticketid = Long.valueOf(ticketnumber.toString());
-        return java.util.Arrays.asList(ticketRepo.findAllById(ticketid));
+        return Collections.singletonList(ticketRepo.findAllById(ticketid));
 
     }
 
+    @Override
+    public Ticket getTicketObjectByTicketId(String id){
+        return ticketRepo.findAllById(Long.parseLong(id));
+    }
 
     @Override
-    public void addTicket(TicketDto ticketDto) {
+    public void addTicket(TicketDTO ticketDto) {
         TicketStatus ticketStatus = new TicketStatus();
-        ArrayList<TicketStatus> list = new ArrayList();
+        ArrayList<TicketStatus> list = new ArrayList<>();
         ticketStatus.setUsername(getUsername());
         ticketStatus.setStatusUpdate(ticketDto.getStatusUpdate());
         list.add(ticketStatus);
         Ticket ticket = new Ticket(list, ticketDto.getClientid(), ticketDto.isClosed(), ticketDto.getCurrentgroup());
         ticketRepo.save(ticket);
+    }
+
+    @Override
+    public TicketDTO editTicket(TicketDTO ticketDto){
+        return null;
     }
 }

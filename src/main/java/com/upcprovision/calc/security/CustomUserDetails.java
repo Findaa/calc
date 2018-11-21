@@ -1,16 +1,15 @@
-package com.upcprovision.calc.model;
+package com.upcprovision.calc.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class CustomUserDetails extends User implements UserDetails, Serializable {
 
-    public CustomUserDetails(final User users) {
+    CustomUserDetails(final User users) {
         super(users);
     }
 

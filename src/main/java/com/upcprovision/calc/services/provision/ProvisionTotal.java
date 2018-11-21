@@ -1,19 +1,19 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.services.provision;
 
 import com.upcprovision.calc.model.provision.Deals;
-import com.upcprovision.calc.repos.provision.DealsRepo;
+import com.upcprovision.calc.services.provision.DealsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TotalSales {
+public class ProvisionTotal {
+
+    private DealsServices dealsRepo;
 
     @Autowired
-    DealsServices dealsRepo;
-
-    public TotalSales(DealsServices dealsRepo) {
+    public ProvisionTotal(DealsServices dealsRepo) {
         this.dealsRepo = dealsRepo;
     }
 

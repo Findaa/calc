@@ -1,4 +1,4 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.services.provision;
 
 import com.upcprovision.calc.dto.DealsDTO;
 import org.springframework.stereotype.Service;
@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class UtargCalc {
+public class ProvisionSingle {
 
-    public double utargcalc(DealsDTO dealsDTO, int x) {
-        BigDecimal p = BigDecimal.valueOf(0);                         //podstawa do mnozenia
+    double provisionSinglenCalc(DealsDTO dealsDTO, int x) {
+
+        BigDecimal p = BigDecimal.valueOf(0);
         BigDecimal d = BigDecimal.valueOf(0);
         BigDecimal i = BigDecimal.valueOf(0);
-
         double darpu = dealsDTO.getDarpu();
         int segment = dealsDTO.getSegment();
         boolean loj = dealsDTO.isLoj();
@@ -21,8 +21,7 @@ public class UtargCalc {
         boolean msc = dealsDTO.isMsc();
         boolean newclient = dealsDTO.isNewclient();
 
-
-        if (!loj) {                                                    //jezeli nie wystepuje lojalizacja p = 1/2 roznicy arpu
+        if (!loj) {
             p = BigDecimal.valueOf(darpu / 2);
             System.out.println("bez loj");
             if(newclient){
@@ -64,7 +63,6 @@ public class UtargCalc {
             d = d.add(p.multiply(BigDecimal.valueOf(0.1)));
         } else if (segment == 4 || segment == 5) {
             d = d.add(p.multiply(BigDecimal.valueOf(0.15)));
-        } else {
         }
 
         p = p.add(d);
@@ -74,15 +72,11 @@ public class UtargCalc {
         } else {
             return i.doubleValue();
         }
-    }
+}
+    double okreslojcash(double darpu, boolean loj, boolean okresloj) throws NullPointerException {
 
-
-//
-//
-
-
-    public double okreslojcash(double darpu, boolean loj, boolean okresloj) throws NullPointerException {
         double value;
+
         try {
             if (okresloj && loj) {
                 darpu = darpu * 0.3;
@@ -98,7 +92,8 @@ public class UtargCalc {
     }
 
 
-    public double reccash(double darpu, boolean rec) {
+    double reccash(double darpu, boolean rec) {
+
         if (rec) {
             darpu = darpu * 0.2;
             return darpu;
@@ -107,7 +102,8 @@ public class UtargCalc {
         }
     }
 
-    public double msccash(double darpu, boolean msc) {
+    double msccash(double darpu, boolean msc) {
+
         if (msc) {
             darpu = darpu * 0.2;
             return darpu;
@@ -116,7 +112,8 @@ public class UtargCalc {
         }
     }
 
-    public double segmentcash(double darpu, int seg) {
+    double segmentcash(double darpu, int seg) {
+
         if (seg == 3) {
             return darpu * 0.1;
         } else if (seg == 4 || seg == 5) {

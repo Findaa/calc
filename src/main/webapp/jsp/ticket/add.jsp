@@ -19,7 +19,7 @@
         <textarea name="statusUpdate" form="frm" rows="4" cols="99" required></textarea>
         <br/>
 
-    <form:form method="post" action="/ticket/add" modelAttribute="ticket" id="frm" name="frm">
+    <form:form method="post" action="/ticketapp/add" modelAttribute="ticket" id="frm" name="frm">
         Id Klienta
         <input type="text" name="clientid" placeholder="ID Klienta" required/><br/>
         Przypisana Grupa:

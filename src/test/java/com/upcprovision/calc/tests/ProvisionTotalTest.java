@@ -1,15 +1,15 @@
 package com.upcprovision.calc.tests;
 
 import com.upcprovision.calc.model.provision.Deals;
-import com.upcprovision.calc.services.TotalSales;
+import com.upcprovision.calc.services.provision.ProvisionTotal;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TotalSalesTest {
+public class ProvisionTotalTest {
 
-    TotalSales totalSales = new TotalSales(null);
+    ProvisionTotal provisionTotal = new ProvisionTotal(null);
 
     @Test
     public void getTotalSales() {
@@ -17,6 +17,6 @@ public class TotalSalesTest {
         dealsList.add(new Deals("1", 1, 1, 1, true, true, true, true, 10));
         dealsList.add(new Deals("1", 1, 1, 1, true, true, true, true, 10));
 
-        assert totalSales.getTotalSales(dealsList) == 20;
+        assert provisionTotal.getTotalSales(dealsList) == 20;
     }
 }

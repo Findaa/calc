@@ -1,4 +1,4 @@
-package com.upcprovision.calc.model;
+package com.upcprovision.calc.security;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,7 +10,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Long id;
-
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -22,7 +21,6 @@ public class User {
     @Column(name= "leader")
     private int leaderid;
 
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns =
@@ -30,11 +28,6 @@ public class User {
             inverseJoinColumns =
             @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-
-
-
-
 
     public User(String username, String password, String mail, int active, Set<Role> roles, int leaderid) {
         this.username = username;
@@ -45,8 +38,7 @@ public class User {
         this.leaderid = leaderid;
     }
 
-    public User() {
-    }
+    public User() { }
 
     public User(User user) {
         this.active = user.getActive();
@@ -57,9 +49,6 @@ public class User {
         this.id = user.getId();
         this.leaderid = user.getLeaderid();
     }
-
-
-
 
     public Long getId() {
         return id;

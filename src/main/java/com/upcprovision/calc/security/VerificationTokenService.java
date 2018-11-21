@@ -1,13 +1,8 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.security;
 
-import com.upcprovision.calc.model.User;
-import com.upcprovision.calc.model.VerificationToken;
-import com.upcprovision.calc.repos.TokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;

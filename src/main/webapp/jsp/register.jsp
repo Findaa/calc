@@ -18,12 +18,18 @@ ${x}
         <input type="password" name="password" placeholder="Hasło" required/><br/>
         <input type="password" name="password2" placeholder="Powtórz Haslo" required/><br/>
         <input type="text" name="mail" placeholder="E-mail" required/><br/>
-        <input type="text" name="leader" placeholder="id lidera" required/><br/>
+        <select name="currentgroup" class="ticketMessage">
+            <option value="helpdesk" ${param.currentgroup == 'helpdesk' ? 'selected' : ''}>leader1</option>
+            <option value="helpdeskplus" ${param.currentgroup == 'helpdeskplus' ? 'selected' : ''}>leader2</option>
+            <option value="cbo" ${param.currentgroup == 'cbo' ? 'selected' : ''}>cbo</option>
+        </select><br/>
         <input type="submit" value="Zarejestruj"/>
     </form:form><br/>
     <form:form method="get" action="index">
         <input type="submit" value="Strona Główna">
     </form:form><br/>
+    Registration is blocked due to proxy server.
+<br/>
     ID Leaderow:<br/>
     leader1<br/>
     leader2<br/>

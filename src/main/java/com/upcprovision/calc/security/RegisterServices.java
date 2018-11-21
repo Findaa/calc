@@ -1,31 +1,27 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.security;
 
 import com.upcprovision.calc.dto.UserDTO;
-import com.upcprovision.calc.model.User;
-import com.upcprovision.calc.model.VerificationToken;
-import com.upcprovision.calc.repos.TokenRepo;
-import com.upcprovision.calc.repos.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegisterServices {
 
+    private UserService userService;
+    private TokenRepo tokenRepo;
+
     @Autowired
-    UserService userService;
-    @Autowired
-    TokenRepo tokenRepo;
+    public RegisterServices(UserService userService, TokenRepo tokenRepo) {
+        this.userService = userService;
+        this.tokenRepo = tokenRepo;
+    }
 
     public boolean passCompare(UserDTO userDTO) {
         return userDTO.getPassword().equals(userDTO.getPassword2());
     }
 
     public boolean validate(String username, String mail) {
-        if (userService.getByUsername(username) == null && userService.getByMail(mail) == null) {
-            return true;
-        }
-        return false;
+        return (userService.getByUsername(username) == null && userService.getByMail(mail) == null);
     }
 
     public String mail(String token) {

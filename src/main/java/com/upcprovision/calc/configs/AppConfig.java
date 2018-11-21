@@ -10,11 +10,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-
 @EnableWebMvc
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
-
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -29,7 +27,6 @@ public class AppConfig implements WebMvcConfigurer {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
         bean.setPrefix("/jsp/");
         bean.setSuffix(".jsp");
-
         return bean;
     }
 

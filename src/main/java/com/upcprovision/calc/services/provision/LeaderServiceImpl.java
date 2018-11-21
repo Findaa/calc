@@ -1,10 +1,9 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.services.provision;
 
-import com.upcprovision.calc.model.CustomUserDetails;
+import com.upcprovision.calc.security.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Deals;
-import com.upcprovision.calc.model.User;
-import com.upcprovision.calc.repos.provision.LeaderInterface;
-import com.upcprovision.calc.repos.UserService;
+import com.upcprovision.calc.security.User;
+import com.upcprovision.calc.security.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,15 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LeaderService implements LeaderInterface {
+public class LeaderServiceImpl implements com.upcprovision.calc.repos.provision.LeaderService {
 
+    private UserService userService;
+    private DealsServices dealsServices;
 
     @Autowired
-    UserService userService;
-
-    @Autowired
-    DealsServices dealsServices;
-
+    public LeaderServiceImpl(UserService userService, DealsServices dealsServices) {
+        this.userService = userService;
+        this.dealsServices = dealsServices;
+    }
 
     public String getUsername() {
         CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -47,19 +47,17 @@ public class LeaderService implements LeaderInterface {
     @Override
     public List<Deals> getTeamDeals(int id) throws NullPointerException {
         List<Deals> tempDeals = new ArrayList<>();
-        List<User> usera = userService.listAll();
+        List<User> userList = userService.listAll();
         List<User> user = new ArrayList<>();
 
-        for (int i = 0; i < usera.size(); i++) {
-            if (usera.get(i).getLeaderid() == id) {
-                user.add(usera.get(i));
-            } else {
+        for (User anUser : userList) {
+            if (anUser.getLeaderid() == id) {
+                user.add(anUser);
             }
         }
-        int size = user.size();
 
-        for (int i = 0; i < size; i++) {
-            tempDeals.addAll(dealsServices.getByLog(user.get(i).getUsername()));
+        for (User anUser : user) {
+            tempDeals.addAll(dealsServices.getByLog(anUser.getUsername()));
         }
         return tempDeals;
     }

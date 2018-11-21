@@ -30,6 +30,7 @@ public class Ticket implements Serializable {
     public Ticket() {
     }
 
+
     public Long getId() {
         return id;
     }

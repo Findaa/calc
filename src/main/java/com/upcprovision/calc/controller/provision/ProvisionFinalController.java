@@ -1,28 +1,25 @@
 package com.upcprovision.calc.controller.provision;
 
-import com.upcprovision.calc.model.CustomUserDetails;
+import com.upcprovision.calc.security.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Target;
-import com.upcprovision.calc.services.TargetCalculator;
-import com.upcprovision.calc.services.TotalSales;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.upcprovision.calc.services.provision.ProvisionFinal;
+import com.upcprovision.calc.services.provision.ProvisionTotal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class MonthprovisionController {
+public class ProvisionFinalController {
 
-    private TargetCalculator targetCalculator;
-    private TotalSales totalSales;
+    private ProvisionFinal provisionFinal;
+    private ProvisionTotal provisionTotal;
 
-    public MonthprovisionController(TargetCalculator targetCalculator, TotalSales totalSales) {
-        this.targetCalculator = targetCalculator;
-        this.totalSales = totalSales;
+    public ProvisionFinalController(ProvisionFinal provisionFinal, ProvisionTotal provisionTotal) {
+        this.provisionFinal = provisionFinal;
+        this.provisionTotal = provisionTotal;
     }
 
     public String getUsername() {
@@ -30,12 +27,11 @@ public class MonthprovisionController {
         return user.getUsername();
     }
 
-
     @GetMapping("/targetadd")
     public String getTargetAdd(Model model) {
         model.addAttribute("target", new Target());
         try {
-            double a = totalSales.getTotalSales(totalSales.findAllByLog(getUsername()));
+            double a = provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername()));
             model.addAttribute("total", a);
         } catch (NullPointerException e) {
             model.addAttribute("total", 0);
@@ -45,9 +41,9 @@ public class MonthprovisionController {
 
     @PostMapping("/targetadd")
     public String postTargetAdd(@ModelAttribute("target") Target target, HttpSession session) {
-        session.setAttribute("result", targetCalculator.calc(0, target));
-        session.setAttribute("resultwsp", targetCalculator.calc(1, target));
-        session.setAttribute("result2", targetCalculator.calc(2, target));
+        session.setAttribute("result", provisionFinal.calc(0, target));
+        session.setAttribute("resultwsp", provisionFinal.calc(1, target));
+        session.setAttribute("result2", provisionFinal.calc(2, target));
         return "redirect:/provision";
     }
 
@@ -55,4 +51,5 @@ public class MonthprovisionController {
     public String getProvision() {
         return "provision";
     }
+
 }

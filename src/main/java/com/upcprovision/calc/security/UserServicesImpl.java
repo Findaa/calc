@@ -1,9 +1,5 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.security;
 
-import com.upcprovision.calc.model.Role;
-import com.upcprovision.calc.model.User;
-import com.upcprovision.calc.repos.UserRepo;
-import com.upcprovision.calc.repos.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +15,10 @@ public class UserServicesImpl implements UserService {
 
     UserRepo userRepo;
 
-
     @Autowired
     public UserServicesImpl(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
-
 
     @Override
     public void add(String username, String password, String mail, Set<Role> roles, int leaderid) {
@@ -93,7 +87,5 @@ public class UserServicesImpl implements UserService {
         }
         return tempUsers;
     }
-
-
 }
 

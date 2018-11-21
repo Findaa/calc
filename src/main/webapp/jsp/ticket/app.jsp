@@ -21,10 +21,28 @@
         <input type="submit" value="Dodaj ticket">
     </form:form><br/>
 </div>
+
 <div class="logout">
     <sec:authorize access="isAuthenticated()">
+        <form:form method="get" action="/targetadd">
+            <input type="submit" value="Prowizja Miesięczna / Target">
+        </form:form>
+
+        <form:form method="get" action="/app/useradd">
+            <input type="submit" value="Dodaj Sprzedaż">
+        </form:form>
+
         <form:form method="post" action="/logout">
             <input type="submit" value="Wyloguj"></form:form>
+    </sec:authorize>
+    <sec:authorize access="!isAuthenticated()">
+        <form:form method="get" action="/index">
+            <input type="submit" value="Strona Glowna"></form:form>
+    </sec:authorize>
+    <sec:authorize access="hasAnyRole('ROLE_LEADER')">
+        <form:form method="get" action="/leader/app">
+            <input type="submit" value="Aplikacja dla leaderów">
+        </form:form>
     </sec:authorize>
 </div>
 

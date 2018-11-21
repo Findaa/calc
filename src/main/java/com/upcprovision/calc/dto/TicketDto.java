@@ -5,11 +5,10 @@ import com.upcprovision.calc.model.tickets.TicketStatus;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TicketDto implements Serializable {
+public class TicketDTO implements Serializable {
 
     private Long id;
     private ArrayList<TicketStatus> ticketStatuses;
-
     private int clientid;
     private boolean closed = false;
     private String currentgroup;
@@ -18,7 +17,7 @@ public class TicketDto implements Serializable {
     private String ticketCreator;
     private String closedString;
 
-    public TicketDto() {}
+    public TicketDTO() {}
 
     public Long getId() {
         return id;

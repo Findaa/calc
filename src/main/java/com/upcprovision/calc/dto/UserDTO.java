@@ -3,9 +3,10 @@ package com.upcprovision.calc.dto;
 import com.upcprovision.calc.validation.PasswordMatches;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @PasswordMatches
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     @NotNull
     @NotEmpty
