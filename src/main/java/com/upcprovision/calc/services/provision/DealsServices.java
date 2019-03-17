@@ -10,7 +10,8 @@ import java.util.List;
 @Service
 public class DealsServices{
 
-    DealsRepo dealsRepo;
+    private DealsRepo dealsRepo;
+
     public DealsServices(DealsRepo dealsRepo) {
         this.dealsRepo = dealsRepo;
     }
@@ -24,5 +25,4 @@ public class DealsServices{
     public void deleteById(Long id){dealsRepo.deleteById(id);}
     public List<Deals> findAllByLog(String log){return dealsRepo.findAllByLog(log);}
     public List<Deals> findAll(){return dealsRepo.findAll();}
-
 }

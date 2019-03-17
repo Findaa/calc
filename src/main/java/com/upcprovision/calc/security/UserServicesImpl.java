@@ -1,6 +1,10 @@
 package com.upcprovision.calc.security;
 
+import com.upcprovision.calc.model.User;
+import com.upcprovision.calc.repos.UserRepo;
+import com.upcprovision.calc.repos.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,7 +17,7 @@ import java.util.Set;
 @Transactional
 public class UserServicesImpl implements UserService {
 
-    UserRepo userRepo;
+    private UserRepo userRepo;
 
     @Autowired
     public UserServicesImpl(UserRepo userRepo) {
@@ -22,7 +26,7 @@ public class UserServicesImpl implements UserService {
 
     @Override
     public void add(String username, String password, String mail, Set<Role> roles, int leaderid) {
-        User user = new User(username, password, mail, 1, roles, 1);
+        User user = new User(username, password, mail, true, roles, 1);
         userRepo.save(user);
     }
 
@@ -54,17 +58,13 @@ public class UserServicesImpl implements UserService {
     @Override
     public User getByUsername(String username) {
         Optional<User> user = userRepo.findUserByUsername(username);
-        if (user.isPresent()) {
-            return user.get();
-        } else return null;
+        return user.orElse(null);
     }
 
     @Override
     public User getByMail(String mail) {
         Optional<User> user = userRepo.findUserByMail(mail);
-        if (user.isPresent()) {
-            return user.get();
-        } else return null;
+        return user.orElse(null);
     }
 
     @Override
@@ -80,12 +80,19 @@ public class UserServicesImpl implements UserService {
         List<User> users = userRepo.findAll();
         List<User> tempUsers = new ArrayList<>();
 
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getLeaderid() == id) {
-                tempUsers.add(users.get(i));
+        for (User user : users) {
+            if (user.getLeaderid() == id) {
+                tempUsers.add(user);
             }
         }
         return tempUsers;
+    }
+
+    @Override
+    public String generateAuthToken(String username, String password)
+    {
+        String credentials = username.concat(password);
+        return BCrypt.hashpw(credentials, "11");
     }
 }
 

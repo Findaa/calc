@@ -1,8 +1,13 @@
 package com.upcprovision.calc.security;
 
 import com.upcprovision.calc.dto.UserDTO;
+import com.upcprovision.calc.model.User;
+import com.upcprovision.calc.repos.TokenRepo;
+import com.upcprovision.calc.repos.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class RegisterServices {
@@ -28,16 +33,25 @@ public class RegisterServices {
         return "Dziekuje za rejestracje. Kliknij link aby potwierdzyc. " + System.lineSeparator() + "http://localhost:8080/active?id=" + token;
     }
 
-    public void activate(String token) {
-        VerificationToken entitytoken = tokenRepo.getByToken(token);
+    public void activate(String token) throws NullPointerException{
+        VerificationToken entityToken = tokenRepo.getByToken(token);
         User user = new User();
-        if (entitytoken != null) {
-            user = entitytoken.getUser();
+        if (entityToken != null) {
+            user = entityToken.getUser();
         }
         if (user != null) {
             user = userService.getById(user.getId());
-            user.setActive(1);
-            userService.add(user);
+            try {
+                if (entityToken.getExpiryDate().before(new Date())) {
+                    user.setActive(true);
+                    userService.add(user);
+                }
+            }catch (NullPointerException e){
+                System.out.println("NPE on activation: "+user.getUsername()+" " +
+                        "\n Current status: " + user.getActive()+"" +
+                        "\n Expiry Date: " + entityToken.getExpiryDate() +"" +
+                        "\n Current Date: "+ new Date());
+            }
         }
     }
 }

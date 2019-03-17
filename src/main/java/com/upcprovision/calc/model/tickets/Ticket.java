@@ -1,13 +1,13 @@
 package com.upcprovision.calc.model.tickets;
 
-
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
-
+@Component
 @Entity
 public class Ticket implements Serializable {
 
@@ -15,21 +15,21 @@ public class Ticket implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ticket_id")
     private Long id;
+    @Lob
     private ArrayList<TicketStatus> ticketStatuses;
-    private int clientid;
+    private int clientId;
     private boolean closed = false;
-    private String currentgroup;
+    private String currentGroup;
 
-    public Ticket(ArrayList<TicketStatus> ticketStatuses, int clientid, boolean closed, String currentgroup) {
+    public Ticket(ArrayList<TicketStatus> ticketStatuses, int clientId, boolean closed, String currentGroup) {
         this.ticketStatuses = ticketStatuses;
-        this.clientid = clientid;
+        this.clientId = clientId;
         this.closed = closed;
-        this.currentgroup = currentgroup;
+        this.currentGroup = currentGroup;
     }
 
     public Ticket() {
     }
-
 
     public Long getId() {
         return id;
@@ -47,12 +47,12 @@ public class Ticket implements Serializable {
         this.ticketStatuses = ticketStatuses;
     }
 
-    public int getClientid() {
-        return clientid;
+    public int getClientId() {
+        return clientId;
     }
 
-    public void setClientid(int clientid) {
-        this.clientid = clientid;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
     public boolean isClosed() {
@@ -63,11 +63,11 @@ public class Ticket implements Serializable {
         this.closed = closed;
     }
 
-    public String getCurrentgroup() {
-        return currentgroup;
+    public String getCurrentGroup() {
+        return currentGroup;
     }
 
-    public void setCurrentgroup(String currentgroup) {
-        this.currentgroup = currentgroup;
+    public void setCurrentGroup(String currentGroup) {
+        this.currentGroup = currentGroup;
     }
 }

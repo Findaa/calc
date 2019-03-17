@@ -18,11 +18,15 @@ ${x}
         <input type="password" name="password" placeholder="Hasło" required/><br/>
         <input type="password" name="password2" placeholder="Powtórz Haslo" required/><br/>
         <input type="text" name="mail" placeholder="E-mail" required/><br/>
-        <select name="currentgroup" class="ticketMessage">
-            <option value="helpdesk" ${param.currentgroup == 'helpdesk' ? 'selected' : ''}>leader1</option>
-            <option value="helpdeskplus" ${param.currentgroup == 'helpdeskplus' ? 'selected' : ''}>leader2</option>
+        <select name="leader" class="ticketMessage">
+            <option value="leader1" ${param.currentgroup == 'leader1' ? 'selected' : ''}>leader1</option>
+            <option value="leader2" ${param.currentgroup == 'leader2' ? 'selected' : ''}>leader2</option>
             <option value="cbo" ${param.currentgroup == 'cbo' ? 'selected' : ''}>cbo</option>
         </select><br/>
+        <%
+            String currentgroup = request.getParameter("currentgroup");
+        %>
+
         <input type="submit" value="Zarejestruj"/>
     </form:form><br/>
     <form:form method="get" action="index">

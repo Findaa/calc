@@ -18,4 +18,9 @@ public class MainController {
 
     @GetMapping("/403")
     public String view403() { return "/403"; }
+
+    @GetMapping("/provisionapp")
+    public String getProvApp(){
+        return "provision/provapp";
+    }
 }

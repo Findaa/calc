@@ -14,7 +14,7 @@
 <div class="tt">
 
     <form:form method="get" action="/app/getdeals">
-        <input type="submit" value="Obecna Prowizja - Wymaga Zalogowania">
+        <input type="submit" value="Obecna Prowizjaa">
     </form:form><br/>
 
     <form:form method="get" action="/targetadd">

@@ -4,20 +4,28 @@ import com.upcprovision.calc.model.tickets.TicketStatus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TicketDTO implements Serializable {
 
     private Long id;
     private ArrayList<TicketStatus> ticketStatuses;
-    private int clientid;
+    private int clientId;
     private boolean closed = false;
-    private String currentgroup;
+    private String currentGroup;
     private String username;
     private String statusUpdate;
     private String ticketCreator;
     private String closedString;
 
+
     public TicketDTO() {}
+
+    public TicketDTO(boolean closed, String currentGroup, String statusUpdate) {
+        this.closed = closed;
+        this.currentGroup = currentGroup;
+        this.statusUpdate = statusUpdate;
+    }
 
     public Long getId() {
         return id;
@@ -35,12 +43,12 @@ public class TicketDTO implements Serializable {
         this.ticketStatuses = ticketStatuses;
     }
 
-    public int getClientid() {
-        return clientid;
+    public int getClientId() {
+        return clientId;
     }
 
-    public void setClientid(int clientid) {
-        this.clientid = clientid;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
     public boolean isClosed() {
@@ -51,12 +59,12 @@ public class TicketDTO implements Serializable {
         this.closed = closed;
     }
 
-    public String getCurrentgroup() {
-        return currentgroup;
+    public String getCurrentGroup() {
+        return currentGroup;
     }
 
-    public void setCurrentgroup(String currentgroup) {
-        this.currentgroup = currentgroup;
+    public void setCurrentGroup(String currentGroup) {
+        this.currentGroup = currentGroup;
     }
 
     public String getUsername() {
@@ -90,4 +98,5 @@ public class TicketDTO implements Serializable {
     public void setClosedString(String closedString) {
         this.closedString = closedString;
     }
+
 }

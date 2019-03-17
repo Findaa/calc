@@ -38,9 +38,9 @@
         <c:forEach items="${ticketlist}" var="pp">
             <tr>
                 <td><a href="viewticket=tt${pp.id}"> <c:out value="${pp.id}"/></a></td>
-                <td><c:out value="${pp.clientid}"/></td>
+                <td><c:out value="${pp.clientId}"/></td>
                 <td><c:out value="${pp.closedString}"/></td>
-                <td><c:out value="${pp.currentgroup}"/></td>
+                <td><c:out value="${pp.currentGroup}"/></td>
                 <td><c:out value="${pp.username}"/></td>
                 <td><c:out value="${pp.ticketCreator}"/></td>
 

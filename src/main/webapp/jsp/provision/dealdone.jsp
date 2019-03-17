@@ -15,11 +15,11 @@
 <div class="relation">
 <p>Dodano: </p>
 <p>Logowy:          ${detali.log} </p>
-<p>ID Klienta:      ${detali.clientid} </p>
+<p>ID Klienta:      ${detali.clientId} </p>
 <p>Różnica Ceny:    ${detali.darpu} </p>
 <p>Segment:         ${detali.segment} </p>
 <p>Rekomendowane:   ${detali.recomended} </p>
-<p>Okres Loj:       ${detali.okresloj} </p>
+<p>Okres Loj:       ${detali.okresLoj} </p>
 <p>Lojalizowano:    ${detali.loj} </p>
 <p>Produkt miesiąca ${detali.msc}</p>
 <p>Utarg:           ${utarg}</p>
@@ -34,7 +34,7 @@
 
 
         <form:form method="get" action="/app/getdeals">
-            <input type="submit" value="Obecna Prowizja - Wymaga Zalogowani">
+            <input type="submit" value="Obecna Prowizja">
         </form:form>
 
         <form:form method="get" action="/targetadd">

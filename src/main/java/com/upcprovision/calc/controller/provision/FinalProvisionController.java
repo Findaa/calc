@@ -4,6 +4,7 @@ import com.upcprovision.calc.security.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Target;
 import com.upcprovision.calc.services.provision.ProvisionFinal;
 import com.upcprovision.calc.services.provision.ProvisionTotal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,31 +13,30 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class ProvisionFinalController {
+public class FinalProvisionController {
+
+    @Autowired
+    public FinalProvisionController(ProvisionFinal provisionFinal, ProvisionTotal provisionTotal, ControllerServices controllerServices) {
+        this.provisionFinal = provisionFinal;
+        this.provisionTotal = provisionTotal;
+        this.controllerServices = controllerServices;
+    }
 
     private ProvisionFinal provisionFinal;
     private ProvisionTotal provisionTotal;
+    private ControllerServices controllerServices;
 
-    public ProvisionFinalController(ProvisionFinal provisionFinal, ProvisionTotal provisionTotal) {
-        this.provisionFinal = provisionFinal;
-        this.provisionTotal = provisionTotal;
-    }
-
-    public String getUsername() {
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getUsername();
-    }
 
     @GetMapping("/targetadd")
     public String getTargetAdd(Model model) {
         model.addAttribute("target", new Target());
         try {
-            double a = provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername()));
+            double a = provisionTotal.getTotalSales(provisionTotal.findAllByLog(controllerServices.getUsername()));
             model.addAttribute("total", a);
         } catch (NullPointerException e) {
             model.addAttribute("total", 0);
         }
-        return "/targetadd";
+        return "provision/targetadd";
     }
 
     @PostMapping("/targetadd")
@@ -49,7 +49,7 @@ public class ProvisionFinalController {
 
     @GetMapping("/provision")
     public String getProvision() {
-        return "provision";
+        return "provision/provision";
     }
 
 }

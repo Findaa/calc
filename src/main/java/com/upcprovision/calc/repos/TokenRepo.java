@@ -1,5 +1,6 @@
-package com.upcprovision.calc.security;
+package com.upcprovision.calc.repos;
 
+import com.upcprovision.calc.security.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -4,13 +4,13 @@ import com.upcprovision.calc.dto.TicketDTO;
 import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;
 import com.upcprovision.calc.repos.tickets.TicketServices;
+import com.upcprovision.calc.security.CustomUserDetails;
+import com.upcprovision.calc.services.DateServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -18,12 +18,13 @@ import java.util.List;
 @Controller
 public class TicketsDatabaseController {
 
-    private TicketServices ticketServices;
-
     @Autowired
     public TicketsDatabaseController(TicketServices ticketServices) {
         this.ticketServices = ticketServices;
     }
+
+    private TicketServices ticketServices;
+
 
     @GetMapping("/ticketapp/get")
     public String viewTicketList(){
@@ -43,26 +44,28 @@ public class TicketsDatabaseController {
     }
 
     @GetMapping("/ticketapp/viewticket={x}")
-    public String viewEdit(@PathVariable String x, HttpSession session) {
-
+    public String viewEdit(@PathVariable String x, HttpSession session, Model model) {
         Ticket oldTicket = ticketServices.getTicket(x).get(0);
         List<TicketStatus> statuses = oldTicket.getTicketStatuses();
-
+        model.addAttribute("ticket", new TicketDTO());
         session.setAttribute("statuses", statuses);
         session.setAttribute("oldTicket", oldTicket);
+        session.setAttribute("ticketId", oldTicket.getId());
+        session.setAttribute("statusUpdate", "");
+        session.setAttribute("ticket", new TicketDTO());
 
-        if (ticketServices.getTicket(x).size() == 1) {
-            session.setAttribute("oldTicket", oldTicket);
-
-        } else {
-            System.out.println("Ticket table != 1");
-        }
         return "ticket/viewticket";
     }
 
-    @PostMapping("/ticket/viewticket")
-    public String editTicket(HttpSession session){
-    int id = Integer.parseInt(session.getAttribute("ticketlistId").toString());
-        return "redirect:/ticketapp/get?id="+id;
+    @PostMapping("/ticketapp/addStatus")
+    public String editTicket(@ModelAttribute("ticket") TicketDTO modelTicket, HttpSession session, @SessionAttribute("statuses") List<TicketStatus> statuses) {
+
+        var id = session.getAttribute("ticketId");
+        TicketDTO ticketDTO = new TicketDTO(
+                modelTicket.isClosed(),
+                modelTicket.getCurrentGroup(),
+                modelTicket.getStatusUpdate());
+        ticketServices.addStatus(ticketDTO, Integer.parseInt(id.toString()));
+        return "redirect:/ticketapp/viewticket=tt" + id;
     }
 }

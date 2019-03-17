@@ -2,7 +2,7 @@ package com.upcprovision.calc.controller.provision;
 
 import com.upcprovision.calc.repos.provision.LeaderService;
 import com.upcprovision.calc.security.CustomUserDetails;
-import com.upcprovision.calc.security.UserService;
+import com.upcprovision.calc.repos.UserService;
 import com.upcprovision.calc.services.provision.DealsServices;
 import com.upcprovision.calc.services.provision.ProvisionTotal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class LeaderController {
         return "leader/app";
     }
 
-    @GetMapping("/leader/getDatabase")
+    @GetMapping("/leader/getdatabase")
     public String viewDatabaseCheckout(Model model) {
         model.addAttribute("id", new String());
         return "leader/getDatabase";
@@ -47,7 +47,6 @@ public class LeaderController {
 
     @PostMapping("/processDb")
     public String databaseProcess(@ModelAttribute("id") String log, HttpSession session) {
-        System.out.println(log+": stringLeaderUsername");
         session.setAttribute("list", dealsServices.getByLog(log));
         session.setAttribute("numerlog", log);
         session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(log)));
@@ -62,8 +61,6 @@ public class LeaderController {
     @PostMapping("/leader/getteam")
     public String viewTeam(HttpSession session){
         int id = 1;
-        System.out.println("! Postmapping /leader/getteam !");
-        System.out.println("userService.listAllByLeader: " + userService.findAllByLeaderid(id));
         session.setAttribute("list", leaderService.getTeamDeals(id));
         session.setAttribute("numerlog", id);
         session.setAttribute("total", provisionTotal.getTotalSales(leaderService.getTeamDeals(id)));

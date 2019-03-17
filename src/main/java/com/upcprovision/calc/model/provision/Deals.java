@@ -3,8 +3,6 @@ import com.upcprovision.calc.dto.DealsDTO;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
-
-
 @Component
 @Entity
 @Table(name="deals")
@@ -14,98 +12,92 @@ public class Deals {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String log;
-    private double clientid;
-    private double darpu;
-    private int segment;
-    private boolean loj = false;
-    private boolean recomended = false;
-    private boolean okresloj=false;
-    private boolean msc=false;
-    private double utarg;
-    private double lojcash;
-    private double reccash;
-    private double msccash;
-    private double segcash;
-    private boolean newclient=false;
-
-
-
+   private String log;
+   private double clientId;
+   private double darpu;
+   private int segment;
+   private boolean loj = false;
+   private boolean recomended = false;
+   private boolean okresLoj=false;
+   private boolean msc=false;
+   private double utarg;
+   private double lojCash;
+   private double recCash;
+   private double mcsCash;
+   private double segCash;
+   private boolean newClient=false;
 
 
     public Deals(Long id, DealsDTO dealsDTO){
         this.id = id;
         this.log = dealsDTO.getLog();
-        this.clientid = dealsDTO.getClientid();
+        this.clientId = dealsDTO.getClientId();
         this.darpu = dealsDTO.getDarpu();
         this.segment = dealsDTO.getSegment();
         this.loj = dealsDTO.isLoj();
         this.recomended = dealsDTO.isRecomended();
-        this.okresloj =dealsDTO.isOkresloj();
+        this.okresLoj =dealsDTO.isOkresloj();
         this.msc = dealsDTO.isMsc();
     }
 
-    public Deals(String log, double clientid, double darpu, int segment, boolean loj, boolean recomended, boolean okresloj,
-                 boolean msc, double utarg, double lojcash, double reccash, double msccash, double segcash, boolean newclient) {
+    public Deals(String log, double clientId, double darpu, int segment, boolean loj, boolean recomended, boolean okresLoj,
+                 boolean msc, double utarg, double lojCash, double recCash, double mcsCash, double segCash, boolean newClient) {
         this.log = log;
-        this.clientid = clientid;
+        this.clientId = clientId;
         this.darpu = darpu;
         this.segment = segment;
         this.loj = loj;
         this.recomended = recomended;
-        this.okresloj = okresloj;
+        this.okresLoj = okresLoj;
         this.msc = msc;
         this.utarg = utarg;
-        this.lojcash = lojcash;
-        this.reccash = reccash;
-        this.msccash = msccash;
-        this.segcash = segcash;
-        this.newclient = newclient;
+        this.lojCash = lojCash;
+        this.recCash = recCash;
+        this.mcsCash = mcsCash;
+        this.segCash = segCash;
+        this.newClient = newClient;
 
     }
 
-    public Deals(Long id, String log, double clientid, double darpu, int segment, boolean loj, boolean recomended, boolean okresloj, boolean msc, double utarg, double lojcash, double reccash, double msccash, double segcash) {
+    public Deals(Long id, String log, double clientId, double darpu, int segment, boolean loj, boolean recomended, boolean okresLoj, boolean msc, double utarg, double lojCash, double recCash, double mcsCash, double segCash) {
         this.id = id;
         this.log = log;
-        this.clientid = clientid;
+        this.clientId = clientId;
         this.darpu = darpu;
         this.segment = segment;
         this.loj = loj;
         this.recomended = recomended;
-        this.okresloj = okresloj;
+        this.okresLoj = okresLoj;
         this.msc = msc;
         this.utarg = utarg;
-        this.lojcash = lojcash;
-        this.reccash = reccash;
-        this.msccash = msccash;
-        this.segcash = segcash;
+        this.lojCash = lojCash;
+        this.recCash = recCash;
+        this.mcsCash = mcsCash;
+        this.segCash = segCash;
     }
 
-
-    public Deals(String log, double clientid, double darpu, int segment, boolean loj, boolean recomended, boolean okresloj, boolean msc, double utarg) {
+    public Deals(String log, double clientId, double darpu, int segment, boolean loj, boolean recomended, boolean okresLoj, boolean msc, double utarg) {
         this.log = log;
-        this.clientid = clientid;
+        this.clientId = clientId;
         this.darpu = darpu;
         this.loj = loj;
         this.recomended = recomended;
-        this.okresloj = okresloj;
+        this.okresLoj = okresLoj;
         this.msc = msc;
         this.segment = segment;
         this.utarg=utarg;
     }
 
-    public Deals(String log, double clientid, double darpu, int segment, boolean loj,  boolean recomended, boolean okresloj, boolean msc) {
+    public Deals(String log, double clientId, double darpu, int segment, boolean loj,  boolean recomended, boolean okresLoj, boolean msc) {
         this.log = log;
-        this.clientid = clientid;
+        this.clientId = clientId;
         this.darpu = darpu;
         this.loj = loj;
         this.recomended = recomended;
-        this.okresloj = okresloj;
+        this.okresLoj = okresLoj;
         this.msc = msc;
         this.segment = segment;
     }
-
-
 
     public Deals(){}
 
@@ -125,12 +117,12 @@ public class Deals {
         this.log = log;
     }
 
-    public double getClientid() {
-        return clientid;
+    public double getClientId() {
+        return clientId;
     }
 
-    public void setClientid(double clientid) {
-        this.clientid = clientid;
+    public void setClientId(double clientId) {
+        this.clientId = clientId;
     }
 
     public double getDarpu() {
@@ -139,6 +131,14 @@ public class Deals {
 
     public void setDarpu(double darpu) {
         this.darpu = darpu;
+    }
+
+    public int getSegment() {
+        return segment;
+    }
+
+    public void setSegment(int segment) {
+        this.segment = segment;
     }
 
     public boolean isLoj() {
@@ -157,12 +157,12 @@ public class Deals {
         this.recomended = recomended;
     }
 
-    public boolean isOkresloj() {
-        return okresloj;
+    public boolean isOkresLoj() {
+        return okresLoj;
     }
 
-    public void setOkresloj(boolean okresloj) {
-        this.okresloj = okresloj;
+    public void setOkresLoj(boolean okresLoj) {
+        this.okresLoj = okresLoj;
     }
 
     public boolean isMsc() {
@@ -173,14 +173,6 @@ public class Deals {
         this.msc = msc;
     }
 
-    public int getSegment() {
-        return segment;
-    }
-
-    public void setSegment(int segment) {
-        this.segment = segment;
-    }
-
     public double getUtarg() {
         return utarg;
     }
@@ -189,32 +181,44 @@ public class Deals {
         this.utarg = utarg;
     }
 
-    public double getLojcash() {return lojcash;}
-
-    public void setLojcash(double lojcash) {this.lojcash = lojcash;}
-
-    public double getReccash() {return reccash;}
-
-    public void setReccash(double reccash) {this.reccash = reccash;}
-
-    public double getMsccash() {return msccash;}
-
-    public void setMsccash(double msccash) {this.msccash = msccash;}
-
-    public double getSegcash() {
-        return segcash;
+    public double getLojCash() {
+        return lojCash;
     }
 
-    public void setSegcash(double segcash) {
-        this.segcash = segcash;
+    public void setLojCash(double lojCash) {
+        this.lojCash = lojCash;
     }
 
-    public boolean isNewclient() {
-        return newclient;
+    public double getRecCash() {
+        return recCash;
     }
 
-    public void setNewclient(boolean newclient) {
-        this.newclient = newclient;
+    public void setRecCash(double recCash) {
+        this.recCash = recCash;
+    }
+
+    public double getMcsCash() {
+        return mcsCash;
+    }
+
+    public void setMcsCash(double mcsCash) {
+        this.mcsCash = mcsCash;
+    }
+
+    public double getSegCash() {
+        return segCash;
+    }
+
+    public void setSegCash(double segCash) {
+        this.segCash = segCash;
+    }
+
+    public boolean isNewClient() {
+        return newClient;
+    }
+
+    public void setNewClient(boolean newClient) {
+        this.newClient = newClient;
     }
 }
 

@@ -14,24 +14,21 @@
 <body>
 <div>
     <div class="relation">
-        <textarea name="statusUpdate" form="frm" rows="4" cols="99" required></textarea><br/>
-
-        <form:form method="post" action="/ticket/viewticket" modelAttribute="ticket" name="frm">
+        <form:form method="post" action="/ticketapp/addStatus" modelAttribute="ticket" name="frm" id="frm">
             Ticket ID: ${oldTicket.id}
-            ClientI ID: ${oldTicket.clientid}
+            ClientI ID: ${oldTicket.clientId}<br/>
+            <form:textarea path="statusUpdate" rows="4" cols="99"/><br/>
             <input type="checkbox" name="closed" id="closed" value="${oldTicket.closed}"/>
-            <select name="currentgroup" class="ticketMessage" value="${oldTicket.currentgroup}">
-                <option value="helpdesk" ${param.currentgroup == 'helpdesk' ? 'selected' : ''}>helpdesk</option>
-                <option value="helpdeskplus" ${param.currentgroup == 'helpdeskplus' ? 'selected' : ''}>helpdeskplus
+            <select name="currentGroup" class="ticketMessage" value="${oldTicket.currentGroup}">
+                <option value="helpdesk" ${param.currentGroup == 'helpdesk' ? 'selected' : ''}>helpdesk</option>
+                <option value="helpdeskplus" ${param.currentGroup == 'helpdeskplus' ? 'selected' : ''}>helpdeskplus
                 </option>
-                <option value="cbo" ${param.currentgroup == 'cbo' ? 'selected' : ''}>cbo</option>
+                <option value="cbo" ${param.currentGroup == 'cbo' ? 'selected' : ''}>cbo</option>
             </select>
             <table>
                 <c:forEach items="${statuses}" var="status">
-                    <tr>
-                        <td>${status.username}</td>
-                        <td> ${status.statusUpdate}</td>
-                    </tr>
+                    <tr><td> -- </td><td>${status.username}, ${status.date}</td></tr>
+                    <tr><td> ${status.statusUpdate}</td><td> -- </td></tr>
                 </c:forEach>
             </table>
             <input type="submit" value="Dodaj wpis"/>
@@ -40,13 +37,11 @@
 
     <div class="logout">
         <sec:authorize access="isAuthenticated()">
-
-            <form:form method="get" action="/targetadd">
-                <input type="submit" value="Prowizja Miesięczna / Target">
-            </form:form>
-
-            <form:form method="get" action="/app/getdeals">
-                <input type="submit" value="Obecna Prowizja - Wymaga Zalogowani">
+            <form:form method="get" action="/provisionapp">
+            <input type="submit" value="Aplikacja Prowizje">
+        </form:form>
+            <form:form method="get" action="/ticketapp">
+                <input type="submit" value="Aplikacja ticketowa">
             </form:form>
 
             <form:form method="post" action="/logout">

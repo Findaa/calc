@@ -8,56 +8,57 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Dodaj Dane | Kalkulator Prowizji</title>
+    <title>Edytuj Dane | Kalkulator Prowizji</title>
     <link rel="stylesheet" href="<c:url value="/resources/static/css/style.css"/>" type="text/css"/>
 </head>
 <body>
 
 
 <div class="relation">
+    Editing Deal ${id}
     <p>
-        <form:form method="post" action="/useradd" modelAttribute="deal">
+        <form:form method="post" action="/app/edit" modelAttribute="newdeal">
     <p id="loginpagelabel">Podaj dane</p>
     <d>NrLogowy IdKlienta DeltaArpu Segment</d>
     <br/>
-    <input type="text" name="log" placeholder="Numer Logowy" required/>
-    <input type="text" name="clientid" placeholder="ID Klienta" required/>
-    <input type="text" name="darpu" placeholder="Różnica Arpu" onchange="this.value = this.value.replace(',', '.')"
+    <input type="text" name="log" placeholder="Numer Logowy" required value="${olddeal.log}"/>
+    <input type="text" name="clientId" placeholder="ID Klienta" required value="${olddeal.clientId}"/>
+    <input type="text" name="darpu" placeholder="Różnica Arpu" value="${olddeal.darpu}" onchange="this.value = this.value.replace(',', '.')"
            required/>
-    <input type="text" name="segment" placeholder="Segment" required/><br/><br/><br/><br/>
-    loj &nbsp&nbsp&nbsp&nbsp rek &nbsp&nbsp&nbsp&nbsp 12< &nbsp&nbsp msc&nbsp&nbsp NOWY?<br/>
+    <input type="text" name="segment" placeholder="Segment" required value="${olddeal.segment}"/><br/><br/><br/><br/>
+    loj &nbsp&nbsp&nbsp&nbsp rek &nbsp&nbsp&nbsp&nbsp 12< &nbsp&nbsp msc<br/>
     <input type="checkbox" name="loj" id="loj"/>&nbsp&nbsp&nbsp
     <input type="checkbox" name="recomended" id="'recomended"/>&nbsp&nbsp&nbsp
-    <input type="checkbox" name="okresloj" id="'okresloj"/>&nbsp&nbsp&nbsp
-    <input type="checkbox" name="msc" id="msc"/>&nbsp&nbsp&nbsp
-    <input type="checkbox" name="newclient" id="newclient"/><br/></div>
-    <div class="relation">loj -> Czy klient został zlojalizowany? &nbsp &nbsp
+    <input type="checkbox" name="okresLoj" id="'okresLoj" />&nbsp&nbsp&nbsp
+    <input type="checkbox" name="msc" id="'msc"/><br/></div>
+<div class="relation">loj -> Czy klient został zlojalizowany? &nbsp &nbsp
     rek -> Czy oferta była rekomendowana? &nbsp &nbsp
     12< -> Czy w wypadku lojalizacji, była większa niż 12msc? &nbsp &nbsp
-        msc -> Czy sprzedano produkt miesiąca? &nbsp &nbsp</div>
-    <br/><br/>
+    msc -> Czy sprzedano produkt miesiąca? &nbsp &nbsp</div>
+<br/><br/>
 
-    <input type="submit" value="Dodaj Sprzedaż"/>
-    </form:form>
-    </p>
+<input type="submit" value="Dodaj Sprzedaż"/>
+<div class="relation">
+
+</form:form>
+<form:form method="post" action="/app/edit/delete" modelAttribute="deletedeal">
+    Podaj logowy aby umozliwic usuniecie<br/>
+    <input type="text" name="confirm" required><br/>
+<input type="submit" value="Usun"/>
+</form:form>
+</div>
+</p>
 </div>
 
 <div class="logout">
     <sec:authorize access="isAuthenticated()">
-
-
-        <form:form method="get" action="/ticketapp">
-            <input type="submit" value="Aplikacja Ticketowa">
-        </form:form>
-
-
 
         <form:form method="get" action="/targetadd">
             <input type="submit" value="Prowizja Miesięczna / Target">
         </form:form>
 
         <form:form method="get" action="/app/getdeals">
-            <input type="submit" value="Obecna Prowizja - Wymaga Zalogowani">
+            <input type="submit" value="Obecna Prowizja">
         </form:form>
 
         <form:form method="post" action="/logout">

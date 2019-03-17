@@ -1,5 +1,7 @@
 package com.upcprovision.calc.security;
 
+import com.upcprovision.calc.model.User;
+import com.upcprovision.calc.repos.TokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class VerificationTokenService {
             char random = symbols[idx];
            tokeno[i]=random;
         }
+
         VerificationToken token = new VerificationToken();
         token.setUser(user);
         token.setExpiryDate(calculateExpiryDate(EXPIRATION));
@@ -35,9 +38,13 @@ public class VerificationTokenService {
 
     private Date calculateExpiryDate(int expiryTimeInMinutes) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Timestamp(cal.getTime().getTime()));
-        cal.add(Calendar.MINUTE, expiryTimeInMinutes);
+        try {
+            cal.setTime(new Timestamp(cal.getTime().getTime()));
+            cal.add(Calendar.MINUTE, expiryTimeInMinutes);
+        }catch (NullPointerException npe){
+            cal.add(Calendar.MINUTE, 1);
+            System.out.println("NPE on calculateExpiryDate, set on 1 minute");
+        }
         return new Date(cal.getTime().getTime());
     }
-
 }

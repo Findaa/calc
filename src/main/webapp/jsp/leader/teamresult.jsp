@@ -59,13 +59,13 @@
             </tr>
             <c:forEach items="${list}" var="pp">
                 <tr>
-                    <td><fmt:formatNumber maxFractionDigits='0'><c:out value="${pp.clientid}"/></fmt:formatNumber></td>
+                    <td><fmt:formatNumber maxFractionDigits='0'><c:out value="${pp.clientId}"/></fmt:formatNumber></td>
                     <td><c:out value="${pp.darpu}"/></td>
                     <td><c:out value="${pp.segment}"/></td>
                     <td><c:out value="${pp.loj}"/></td>
-                    <td><c:out value="${pp.reccash}"/></td>
-                    <td><c:out value="${pp.lojcash}"/></td>
-                    <td><c:out value="${pp.msccash}"/></td>
+                    <td><c:out value="${pp.recCash}"/></td>
+                    <td><c:out value="${pp.lojCash}"/></td>
+                    <td><c:out value="${pp.mcsCash}"/></td>
                     <td><font color="fuchsia"><c:out value="${pp.utarg}"/></font></td>
                     <td><a href="/app/getdealsdone/edit/${pp.id}"> opcje</a></td>
                 </tr>
@@ -107,13 +107,13 @@
             </tr>
             <c:forEach items="${list}" var="pp">
                 <tr>
-                    <td><c:out value="${pp.clientid}"/></td>
+                    <td><c:out value="${pp.clientId}"/></td>
                     <td><c:out value="${pp.darpu}"/></td>
                     <td><c:out value="${pp.segment}"/></td>
                     <td><c:out value="${pp.loj}"/></td>
-                    <td><c:out value="${pp.reccash}"/></td>
-                    <td><c:out value="${pp.lojcash}"/></td>
-                    <td><c:out value="${pp.msccash}"/></td>
+                    <td><c:out value="${pp.recCash}"/></td>
+                    <td><c:out value="${pp.lojCash}"/></td>
+                    <td><c:out value="${pp.mcsCash}"/></td>
                     <td><font color="fuchsia"><c:out value="${pp.utarg}"/></font></td>
                 </tr>
             </c:forEach>

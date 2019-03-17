@@ -21,12 +21,12 @@
 
     <form:form method="post" action="/ticketapp/add" modelAttribute="ticket" id="frm" name="frm">
         Id Klienta
-        <input type="text" name="clientid" placeholder="ID Klienta" required/><br/>
+        <input type="text" name="clientId" placeholder="ID Klienta" required/><br/>
         Przypisana Grupa:
-        <select name="currentgroup" class="ticketMessage">
-            <option value="helpdesk" ${param.currentgroup == 'helpdesk' ? 'selected' : ''}>helpdesk</option>
-            <option value="helpdeskplus" ${param.currentgroup == 'helpdeskplus' ? 'selected' : ''}>helpdeskplus</option>
-            <option value="cbo" ${param.currentgroup == 'cbo' ? 'selected' : ''}>cbo</option>
+        <select name="currentGroup" class="ticketMessage">
+            <option value="helpdesk" ${param.currentGroup == 'helpdesk' ? 'selected' : ''}>helpdesk</option>
+            <option value="helpdeskplus" ${param.currentGroup == 'helpdeskplus' ? 'selected' : ''}>helpdeskplus</option>
+            <option value="cbo" ${param.currentGroup == 'cbo' ? 'selected' : ''}>cbo</option>
         </select>
         <input type="checkbox" name="closed" id="closed"/>
         <input type="submit" value="Dodaj nowy ticket"/>
@@ -38,12 +38,8 @@
 <div class="logout">
     <sec:authorize access="isAuthenticated()">
 
-        <form:form method="get" action="/targetadd">
-            <input type="submit" value="Prowizja Miesięczna / Target">
-        </form:form>
-
-        <form:form method="get" action="/app/getdeals">
-            <input type="submit" value="Obecna Prowizja - Wymaga Zalogowani">
+        <form:form method="get" action="/provisionapp">
+            <input type="submit" value="Aplikacja Prowizje">
         </form:form>
 
         <form:form method="post" action="/logout">

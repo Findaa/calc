@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConvertService {
 
-    DealsServices dealsServices;
+    private DealsServices dealsServices;
 
     @Autowired
     public ConvertService(DealsServices dealsServices) {
@@ -16,35 +16,53 @@ public class ConvertService {
     }
 
     public Deals convert(DealsDTO dealsDTO, ProvisionSingle provisionSingle) {
-        return new Deals(dealsDTO.getLog(), dealsDTO.getClientid(), dealsDTO.getDarpu(), dealsDTO.getSegment(),
-                dealsDTO.isLoj(), dealsDTO.isRecomended(), dealsDTO.isOkresloj(), dealsDTO.isMsc(),
-                provisionSingle.provisionSinglenCalc(dealsDTO, 1), provisionSingle.okreslojcash(provisionSingle.provisionSinglenCalc(dealsDTO, 2),
-                dealsDTO.isLoj(), dealsDTO.isOkresloj()), provisionSingle.reccash(provisionSingle.provisionSinglenCalc(dealsDTO, 2),
-                dealsDTO.isRecomended()), provisionSingle.msccash(provisionSingle.provisionSinglenCalc(dealsDTO, 2), dealsDTO.isMsc()),
-                provisionSingle.segmentcash(provisionSingle.provisionSinglenCalc(dealsDTO, 2), dealsDTO.getSegment()), dealsDTO.isNewclient());
+        return new Deals(
+                dealsDTO.getLog(),
+                dealsDTO.getClientId(),
+                dealsDTO.getDarpu(),
+                dealsDTO.getSegment(),
+                dealsDTO.isLoj(),
+                dealsDTO.isRecomended(),
+                dealsDTO.isOkresloj(),
+                dealsDTO.isMsc(),
+                provisionSingle.provisionSingleCalc(dealsDTO, 1),
+                provisionSingle.okreslojCash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
+                dealsDTO.isLoj(),
+                dealsDTO.isOkresloj()),
+                provisionSingle.recCash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
+                dealsDTO.isRecomended()),
+                provisionSingle.mcsCash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
+                dealsDTO.isMsc()),
+                provisionSingle.segmentcash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
+                dealsDTO.getSegment()),
+                dealsDTO.isnewClient());
     }
 
     public Deals convert(Long id, DealsDTO dealsDTO, ProvisionSingle provisionSingle) {
         Deals deal = dealsServices.findAllById(id);
-        if(deal != null) {
+        if (deal != null) {
             deal.setId(id);
             deal.setLog(dealsDTO.getLog());
-            deal.setClientid(dealsDTO.getClientid());
+            deal.setClientId(dealsDTO.getClientId());
             deal.setDarpu(dealsDTO.getDarpu());
             deal.setSegment(dealsDTO.getSegment());
             deal.setLoj(dealsDTO.isLoj());
             deal.setRecomended(dealsDTO.isRecomended());
-            deal.setOkresloj(dealsDTO.isOkresloj());
+            deal.setOkresLoj(dealsDTO.isOkresloj());
             deal.setMsc(dealsDTO.isMsc());
-            deal.setUtarg(provisionSingle.provisionSinglenCalc(dealsDTO, 1));
-            deal.setLojcash(provisionSingle.okreslojcash(provisionSingle.provisionSinglenCalc(dealsDTO, 2), dealsDTO.isLoj(), dealsDTO.isOkresloj()));
-            deal.setReccash(provisionSingle.reccash(provisionSingle.provisionSinglenCalc(dealsDTO, 2), dealsDTO.isRecomended()));
-            deal.setMsccash(provisionSingle.msccash(provisionSingle.provisionSinglenCalc(dealsDTO, 2), dealsDTO.isMsc()));
-            deal.setSegcash(provisionSingle.segmentcash(provisionSingle.provisionSinglenCalc(dealsDTO, 2), dealsDTO.getSegment()));
-            deal.setNewclient(dealsDTO.isNewclient());
+            deal.setUtarg(provisionSingle.provisionSingleCalc(dealsDTO, 1));
+            deal.setLojCash(provisionSingle.okreslojCash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.isLoj(), dealsDTO.isOkresloj()));
+            deal.setRecCash(provisionSingle.recCash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.isRecomended()));
+            deal.setMcsCash(provisionSingle.mcsCash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.isMsc()));
+            deal.setSegCash(provisionSingle.segmentcash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.getSegment()));
+            deal.setNewClient(dealsDTO.isnewClient());
             return deal;
         } else {
-            return convert(dealsDTO, provisionSingle);
+            try {
+                return convert(dealsDTO, provisionSingle);
+            } catch (NullPointerException npe){
+                return null;
+            }
         }
     }
 }

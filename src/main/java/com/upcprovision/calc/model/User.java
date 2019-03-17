@@ -1,4 +1,6 @@
-package com.upcprovision.calc.security;
+package com.upcprovision.calc.model;
+
+import com.upcprovision.calc.security.Role;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -17,7 +19,7 @@ public class User {
     @Column(name = "mail")
     private String mail;
     @Column(name = "active")
-    private int active;
+    private boolean active;
     @Column(name= "leader")
     private int leaderid;
 
@@ -29,7 +31,7 @@ public class User {
             @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String username, String password, String mail, int active, Set<Role> roles, int leaderid) {
+    public User(String username, String password, String mail, boolean active, Set<Role> roles, int leaderid) {
         this.username = username;
         this.password = password;
         this.mail = mail;
@@ -82,11 +84,11 @@ public class User {
         this.mail = mail;
     }
 
-    public int getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

@@ -35,9 +35,12 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.0.4.RELEASE'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.3.7.Final'
 
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
+
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'mysql:mysql-connector-java'
     compile group: 'org.springframework', name: 'spring-jdbc', version: '5.0.8.RELEASE'
+
 
     compile group: 'jstl', name: 'jstl', version: '1.2'
     compile group: 'org.apache.commons', name: 'commons-math3', version: '3.2'
@@ -47,4 +50,8 @@ dependencies {
     compile 'org.springframework.security:spring-security-config'
     compile 'org.springframework.security:spring-security-web'
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.0.7.RELEASE'
+    compile group: 'io.vertx', name: 'vertx-auth-jwt', version: '3.6.2'
+
+
 }
+

@@ -17,10 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @RequestMapping("login")
-    public String viewLogin(Model model) { return "login"; }
+    public String viewLogin() { return "login"; }
 
     @GetMapping("/app")
-    public String viewApp() { return "app"; }
+    public String viewApp() { return "provision/app"; }
 
     @RequestMapping("/app/logout")
     public String viewLogout(HttpServletRequest rq, HttpServletResponse re) {

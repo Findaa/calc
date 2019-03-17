@@ -18,7 +18,7 @@ ${errorMsg}
 <div class="logout">
     <sec:authorize access="isAuthenticated()">
         <form:form method="get" action="/app/getdeals">
-            <input type="submit" value="Obecna Prowizja - Wymaga Zalogowani">
+            <input type="submit" value="Obecna Prowizja">
         </form:form>
 
         <form:form method="get" action="/app/useradd">

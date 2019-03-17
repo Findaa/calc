@@ -4,6 +4,7 @@ import com.upcprovision.calc.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,21 +12,32 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
+@Order(1)
 @EnableWebSecurity
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final CustomUserDetailsService userDetailsService;
+
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    public SpringSecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        BCryptPasswordEncoder pe = new  BCryptPasswordEncoder();
-        auth.userDetailsService(userDetailsService).passwordEncoder(pe);
+        auth.userDetailsService(userDetailsService).passwordEncoder(this.passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
+//        final TokenAuthenticationFilter tokenFilter = new TokenAuthenticationFilter();
+//        http.addFilterBefore(tokenFilter, BasicAuthenticationFilter.class);
+
+//        final CustomBasicAuthenticationFilter customBasicAuthFilter = new CustomBasicAuthenticationFilter(this.authenticationManager() );
+//        http.addFilter(customBasicAuthFilter);
+
         http.authorizeRequests()
                 .antMatchers("/leader/**")
                 .access("hasRole('ROLE_LEADER')")
@@ -41,6 +53,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
+//                .cors().disable()
                 .exceptionHandling().accessDeniedPage("/403");
     }
 

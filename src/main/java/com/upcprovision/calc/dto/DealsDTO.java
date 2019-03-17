@@ -6,14 +6,14 @@ import java.io.Serializable;
 @Component
 public class DealsDTO implements Serializable {
    private String log;
-   private double clientid;
+   private double clientId;
    private double darpu;
    private int segment;
    private boolean loj = false;
    private boolean recomended = false;
-   private boolean okresloj=false;
+   private boolean okresLoj=false;
    private boolean msc=false;
-   private boolean newclient=false;
+   private boolean newClient=false;
 
 
     public String getLog() {
@@ -24,12 +24,12 @@ public class DealsDTO implements Serializable {
         this.log = log;
     }
 
-    public double getClientid() {
-        return clientid;
+    public double getClientId() {
+        return clientId;
     }
 
-    public void setClientid(double clientid) {
-        this.clientid = clientid;
+    public void setClientId(double clientId) {
+        this.clientId = clientId;
     }
 
     public double getDarpu() {
@@ -57,11 +57,11 @@ public class DealsDTO implements Serializable {
     }
 
     public boolean isOkresloj() {
-        return okresloj;
+        return okresLoj;
     }
 
-    public void setOkresloj(boolean okresloj) {
-        this.okresloj = okresloj;
+    public void setOkresloj(boolean okresLoj) {
+        this.okresLoj = okresLoj;
     }
 
     public boolean isMsc() {
@@ -80,11 +80,11 @@ public class DealsDTO implements Serializable {
         this.segment = segment;
     }
 
-    public boolean isNewclient() {
-        return newclient;
+    public boolean isnewClient() {
+        return newClient;
     }
 
-    public void setNewclient(boolean newclient) {
-        this.newclient = newclient;
+    public void setnewClient(boolean newClient) {
+        this.newClient = newClient;
     }
 }

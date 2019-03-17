@@ -19,22 +19,22 @@ import javax.servlet.http.HttpSession;
 public class DatabaseEditController {
 
     @Autowired
-    public DatabaseEditController(ProvisionTotal provisionTotal, ProvisionSingle provisionSingle, DealsServices dealsServices, ConvertService convertService) {
+    public DatabaseEditController(ProvisionTotal provisionTotal, ProvisionSingle provisionSingle, DealsServices dealsServices,
+                                  ConvertService convertService, ControllerServices controllerServices) {
         this.provisionSingle = provisionSingle;
         this.dealsServices = dealsServices;
         this.convertService = convertService;
         this.provisionTotal = provisionTotal;
+        this.controllerServices = controllerServices;
     }
 
     private DealsServices dealsServices;
     private ConvertService convertService;
     private ProvisionSingle provisionSingle;
     private ProvisionTotal provisionTotal;
+    private ControllerServices controllerServices;
 
-    public String getUsername() {
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getUsername();
-    }
+
 
     @GetMapping("/app/getdealsdone/edit/{x}")
     public String viewEdit(@PathVariable double x, HttpSession session, Model model) {
@@ -45,14 +45,14 @@ public class DatabaseEditController {
         model.addAttribute("deletedeal", new String());
         session.setAttribute("id", id.toString());
         session.setAttribute("olddeal", olddeal);
-        return "edit";
+        return "provision/edit";
     }
 
     @PostMapping("/app/edit")
     public String redirectDealsedit(@ModelAttribute("newdeal") DealsDTO newdeal, HttpSession session) {
         Long id = Long.valueOf(session.getAttribute("id").toString());
         dealsServices.add(convertService.convert(id, newdeal, provisionSingle));
-        session.setAttribute("list", dealsServices.getByLog(getUsername()));
+        session.setAttribute("list", dealsServices.getByLog(controllerServices.getUsername()));
         session.setAttribute("numerlog", newdeal.getLog());
         session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(newdeal.getLog())));
         session.setAttribute("confirm", new String());
@@ -64,20 +64,17 @@ public class DatabaseEditController {
     public String deleteDealsedit(@ModelAttribute("confirm") String confirm, HttpSession session) throws NullPointerException {
         String value = session.getAttribute("id").toString();
         Long id = Long.valueOf(value);
-        if (confirm.equals(session.getAttribute("numerlog").toString()) && confirm.equals(getUsername())) {
+        if (confirm.equals(session.getAttribute("numerlog").toString()) && confirm.equals(controllerServices.getUsername())) {
             session.setAttribute("msg", "Usunieto wpis "+id);
             dealsServices.deleteById(id);}
          else {
             session.setAttribute("msg", "Nie udalo sie usunac.");
         }
-        session.setAttribute("list", dealsServices.getByLog(getUsername()));
-        session.setAttribute("numerlog", getUsername());
-        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername())));
-        return "redirect:/app/getdealsdone";
+        return controllerServices.setDealsAttribute(session);
     }
 
     @GetMapping("/app/edited")
     public String viewEdited() {
-        return "edited";
+        return "provision/edited";
     }
 }

@@ -7,28 +7,31 @@ import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;
 import com.upcprovision.calc.repos.tickets.TicketRepo;
 import com.upcprovision.calc.repos.tickets.TicketServices;
+import com.upcprovision.calc.services.DateServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketServicesImpl implements TicketServices {
 
     private TicketRepo ticketRepo;
+    private DateServices dateServices;
 
     public String getUsername() {
         CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = user.getUsername();
-        return name;
+        return user.getUsername();
     }
 
     @Autowired
-    public TicketServicesImpl(TicketRepo ticketRepo) {
+    public TicketServicesImpl(TicketRepo ticketRepo, DateServices dateServices) {
+        this.dateServices = dateServices;
         this.ticketRepo = ticketRepo;
     }
 
@@ -36,45 +39,37 @@ public class TicketServicesImpl implements TicketServices {
     public List<TicketDTO> processTicketList(List<Ticket> ticketList) {
         List<TicketDTO> ticketDTOList = new ArrayList<>();
 
-        for (int x = 0; x < ticketList.size(); x++) {
+        ticketList.forEach(ticket -> {
             TicketDTO ticketDto = new TicketDTO();
-
-            Ticket ticket = ticketList.get(x);
             ArrayList<TicketStatus> ticketStatuses = ticket.getTicketStatuses();
             TicketStatus status = ticketStatuses.get(ticketStatuses.size() - 1);
-            int i = 0;
-            for (int z = 0; z < ticketList.size(); z++) {
-                i++;
-            }
-
-            TicketStatus lastStatus = ticketStatuses.get(ticketStatuses.size() - 1);
             ticketDto.setId(ticket.getId());
             ticketDto.setStatusUpdate(status.getStatusUpdate());
             ticketDto.setUsername(status.getUsername());
-            ticketDto.setCurrentgroup(ticket.getCurrentgroup());
+            ticketDto.setCurrentGroup(ticket.getCurrentGroup());
             ticketDto.setClosed(ticket.isClosed());
             ticketDto.setTicketStatuses(ticketStatuses);
-            ticketDto.setClientid(ticket.getClientid());
-            ticketDto.setTicketCreator(lastStatus.getUsername());
+            ticketDto.setClientId(ticket.getClientId());
+            ticketDto.setTicketCreator(ticketStatuses.get(ticketStatuses.size() - 1).getUsername());
             if (ticket.isClosed()) {
-                ticketDto.setClosedString("Zamkniete");
+                ticketDto.setClosedString("Yes");
             } else {
-                ticketDto.setClosedString("Otwarte");
+                ticketDto.setClosedString("No");
             }
+
             ticketDTOList.add(ticketDto);
-        }
+        });
+
         return ticketDTOList;
     }
 
     @Override
     public List<Ticket> getTicket(String id) {
-        List<Ticket> result = null;
-        int var = 0;
         String checktt = "tt+[0-9]+";
-
+        int var;
         if (Pattern.matches(checktt, id)) {
             var = 1;
-        } else if (!Pattern.matches("checktt", id)) {
+        } else {
             boolean flag = true;
             try {
                 int x = Integer.parseInt(id);
@@ -91,18 +86,17 @@ public class TicketServicesImpl implements TicketServices {
         }
 
         if (var == 1) {
-            result = getTicketByTicketId(id);
-        } else if (var == 2) {
-            result = getTicketsByUser(id);
-        } else if (var == 3) {
-            result = getTicketByClient(id);
+            System.out.println(id+": by ticket id");
+            return getTicketByTicketId(id);
         }
-        return result;
-    }
-
-    @Override
-    public List<Ticket> getTicketByClient(String id) {
-        return ticketRepo.findAllByClientid(Integer.parseInt(id));
+        if (var == 2) {
+            System.out.println(id+": by user id");
+            return getTicketsByUser(id);
+        }else {
+            System.out.println(id+": by client id");
+            System.out.println(getTicketByClient(id)+": getByClientId");
+            return getTicketByClient(id);
+        }
     }
 
     @Override
@@ -111,58 +105,89 @@ public class TicketServicesImpl implements TicketServices {
     }
 
     @Override
+    public List<Ticket> getTicketByClient(String id) {
+
+        Ticket ticketz = ticketRepo.findAllByClientId(23301).get(0);
+
+        System.out.println(id+": getByClientMethod id");
+        System.out.println(Long.toString(ticketz.getClientId())+": get id");
+        System.out.println(getAll().stream().filter(ticket ->
+                Integer.parseInt(Long.toString(ticket.getClientId())) == Integer.parseInt(id))
+                .collect(Collectors.toList()).toString());
+
+        return getAll().stream().filter(ticket ->
+                Integer.parseInt(Long.toString(ticket.getClientId())) == Integer.parseInt(id))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Ticket> getTicketsByUser(String id) {
-
-        List<Ticket> all = getAll();
-        ArrayList<Ticket> returnList = new ArrayList<>();
-
-        for (Ticket anAll : all) {
-            TicketStatus ticketStatus;
-            List<TicketStatus> ticketStatuses;
-            ticketStatuses = anAll.getTicketStatuses();
-            ticketStatus = ticketStatuses.get(0);
-
-            if (ticketStatus.getUsername().equals(id)) { returnList.add(anAll); }
-        }
-        return returnList;
+        return getAll().stream().filter(ticket ->
+                ticket.getTicketStatuses().get(0).getUsername().equals(id))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Ticket> getTicketByTicketId(String id) {
-        char[] tt = id.toCharArray();
-        char[] ttid = new char[tt.length - 2];
-        for (int i = 0; i < ttid.length; i++) {
-            ttid[i] = tt[i + 2];
+    public List<Ticket> getTicketByTicketId(String id) throws ArithmeticException {
+        StringBuilder ticketNumber = new StringBuilder(id);
+        ticketNumber.delete(0, 2);
+        Long ticketid;
+        try {
+            ticketid = Long.valueOf(ticketNumber.toString());
+        }catch (ArithmeticException ae) {
+            ticketid = 0L;
         }
-        StringBuilder ticketnumber = new StringBuilder();
-
-        for (int i = 0; i < ttid.length; i++) {
-            ticketnumber.append(ttid[i]);
-        }
-
-        Long ticketid = Long.valueOf(ticketnumber.toString());
         return Collections.singletonList(ticketRepo.findAllById(ticketid));
-
     }
 
     @Override
-    public Ticket getTicketObjectByTicketId(String id){
+    public Ticket getTicketObjectByTicketId(String id) {
         return ticketRepo.findAllById(Long.parseLong(id));
     }
 
     @Override
     public void addTicket(TicketDTO ticketDto) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+
         TicketStatus ticketStatus = new TicketStatus();
         ArrayList<TicketStatus> list = new ArrayList<>();
         ticketStatus.setUsername(getUsername());
         ticketStatus.setStatusUpdate(ticketDto.getStatusUpdate());
         list.add(ticketStatus);
-        Ticket ticket = new Ticket(list, ticketDto.getClientid(), ticketDto.isClosed(), ticketDto.getCurrentgroup());
+        Ticket ticket = new Ticket(list, ticketDto.getClientId(), ticketDto.isClosed(), ticketDto.getCurrentGroup());
         ticketRepo.save(ticket);
     }
 
     @Override
-    public TicketDTO editTicket(TicketDTO ticketDto){
+    public TicketDTO editTicket(TicketDTO ticketDto) {
         return null;
     }
+
+
+    @Override
+    public void addStatus(TicketDTO ticketDTO, int id) {
+
+        Ticket ticket = ticketRepo.findAllById((long) id);
+        ArrayList<TicketStatus> statuses = ticket.getTicketStatuses();
+        TicketStatus ticketStatus =
+                new TicketStatus(getUsername(), ticketDTO.getStatusUpdate(), Date.from(Instant.now()));
+        System.out.println(Date.from(Instant.now())+": addStatus date");
+        statuses.add(ticketStatus);
+        ticket.setTicketStatuses(statuses);
+        ticket.setClosed(ticketDTO.isClosed());
+        ticket.setCurrentGroup(ticketDTO.getCurrentGroup());
+        ticketRepo.save(ticket);
+    }
+
+    @Override
+    public List<Ticket> getAllByTimestamp(String timestamp){
+        return getAll().stream().filter(ticket ->
+                ticket
+                        .getTicketStatuses().get(0).getDate()
+                        .equals(dateServices.dateToArray(dateServices.stringToDate(timestamp)))).collect(Collectors.toList());
+    }
+
+
 }

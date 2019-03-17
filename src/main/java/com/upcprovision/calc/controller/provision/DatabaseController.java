@@ -5,7 +5,6 @@ import com.upcprovision.calc.security.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Deals;
 import com.upcprovision.calc.services.provision.ConvertService;
 import com.upcprovision.calc.services.provision.DealsServices;
-import com.upcprovision.calc.services.provision.ProvisionTotal;
 import com.upcprovision.calc.services.provision.ProvisionSingle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,17 +18,18 @@ import javax.servlet.http.HttpSession;
 public class DatabaseController {
 
     @Autowired
-    public DatabaseController(ProvisionSingle provisionSingle, ProvisionTotal provisionTotal, DealsServices dealsServices, ConvertService convertService) {
+    public DatabaseController(ProvisionSingle provisionSingle, DealsServices dealsServices,
+                              ConvertService convertService, ControllerServices controllerServices) {
         this.provisionSingle = provisionSingle;
-        this.provisionTotal = provisionTotal;
         this.dealsServices = dealsServices;
         this.convertService = convertService;
+        this.controllerServices = controllerServices;
     }
 
     private ProvisionSingle provisionSingle;
-    private ProvisionTotal provisionTotal;
     private DealsServices dealsServices;
     private ConvertService convertService;
+    private ControllerServices controllerServices;
 
     public String getUsername() {
         CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -37,32 +37,28 @@ public class DatabaseController {
 
     }
 
+
     @GetMapping("/app/useradd")
     public String getUserAdd(Model model) {
         model.addAttribute("deal", new Deals());
-        return "useradd";
+        return "provision/dealadd";
     }
 
-    @PostMapping("/useradd")
+
+    @PostMapping("/app/useradd")
     public String postUserAdd(@ModelAttribute("deal") DealsDTO deal, HttpSession session) {
         dealsServices.add(convertService.convert(deal, provisionSingle));
-        session.setAttribute("list", dealsServices.getByLog(getUsername()));
-        session.setAttribute("numerlog", getUsername());
-        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername())));
-        return "redirect:/app/getdealsdone";
+        return controllerServices.setDealsAttribute(session);
     }
 
     @GetMapping("/app/getdeals")
     public String getDeals(HttpSession session) {
-        session.setAttribute("list", dealsServices.getByLog(getUsername()));
-        session.setAttribute("numerlog", getUsername());
-        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername())));
-        return "redirect:/app/getdealsdone";
+        return  controllerServices.setDealsAttribute(session);
     }
 
     @GetMapping("/app/getdealsdone")
     public String getDealsDoneProcess() { return "redirect:/app/dealslist"; }
 
     @GetMapping("/app/dealslist")
-    public String getDealsDone() { return "getdealsdone"; }
+    public String getDealsDone() { return "provision/getdealsdone"; }
 }

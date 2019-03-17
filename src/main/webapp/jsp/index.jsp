@@ -34,6 +34,7 @@
         </sec:authorize><br/>
         <a href="http://sufler">Sufler</a><br/>
         <a href="http://salesportal">Salesportal</a>
+
     <div class="logout">
         <sec:authorize access="isAuthenticated()">
             <form:form method="post" action="/logout">
@@ -45,6 +46,7 @@
             </form:form>
         </sec:authorize>
     </div>
+</div>
 
 </body>
 </html>

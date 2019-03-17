@@ -2,8 +2,8 @@ package com.upcprovision.calc.services.provision;
 
 import com.upcprovision.calc.security.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Deals;
-import com.upcprovision.calc.security.User;
-import com.upcprovision.calc.security.UserService;
+import com.upcprovision.calc.model.User;
+import com.upcprovision.calc.repos.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,6 +34,8 @@ public class LeaderServiceImpl implements com.upcprovision.calc.repos.provision.
         String leader1 = "leader1";
         String leader2 = "leader2";
 
+        System.out.println(leader+": leaderVarToMethod");
+
         if (leader.equals(leader1)) {
             leaderid = 1;
         } else if (leader.equals(leader2)) {
@@ -50,14 +52,14 @@ public class LeaderServiceImpl implements com.upcprovision.calc.repos.provision.
         List<User> userList = userService.listAll();
         List<User> user = new ArrayList<>();
 
-        for (User anUser : userList) {
-            if (anUser.getLeaderid() == id) {
-                user.add(anUser);
+        for (User single : userList) {
+            if (single.getLeaderid() == id) {
+                user.add(single);
             }
         }
 
-        for (User anUser : user) {
-            tempDeals.addAll(dealsServices.getByLog(anUser.getUsername()));
+        for (User single : user) {
+            tempDeals.addAll(dealsServices.getByLog(single.getUsername()));
         }
         return tempDeals;
     }

@@ -18,17 +18,15 @@ public class ProvisionTotal {
     }
 
     public List<Deals> findAllByLog(String log) {
-        System.out.println();
         return dealsRepo.findAllByLog(log);
     }
 
     public double getTotalSales(List<Deals> deals) {
         int g = deals.size();
         double total = 0;
-        for (int i = 0; i < g; i++) {
-            total += deals.get(i).getUtarg();
+        for (Deals deal : deals) {
+            total += deal.getUtarg();
         }
-
         return total;
     }
 

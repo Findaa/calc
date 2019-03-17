@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Service
 public class ProvisionSingle {
 
-    double provisionSinglenCalc(DealsDTO dealsDTO, int x) {
+    double provisionSingleCalc(DealsDTO dealsDTO, int x) {
 
         BigDecimal p = BigDecimal.valueOf(0);
         BigDecimal d = BigDecimal.valueOf(0);
@@ -17,14 +17,13 @@ public class ProvisionSingle {
         int segment = dealsDTO.getSegment();
         boolean loj = dealsDTO.isLoj();
         boolean recomended = dealsDTO.isRecomended();
-        boolean okresloj = dealsDTO.isOkresloj();
+        boolean okresLoj = dealsDTO.isOkresloj();
         boolean msc = dealsDTO.isMsc();
-        boolean newclient = dealsDTO.isNewclient();
+        boolean newClient = dealsDTO.isnewClient();
 
         if (!loj) {
             p = BigDecimal.valueOf(darpu / 2);
-            System.out.println("bez loj");
-            if(newclient){
+            if(newClient){
                 p = p.divide(BigDecimal.valueOf(2));
                 System.out.println("Nowy");
             }
@@ -49,7 +48,7 @@ public class ProvisionSingle {
             i = p;
         }
 
-        if (okresloj && loj) {
+        if (okresLoj && loj) {
             d = d.add(p.multiply(BigDecimal.valueOf(0.3)));
         }
         if (recomended) {
@@ -73,12 +72,10 @@ public class ProvisionSingle {
             return i.doubleValue();
         }
 }
-    double okreslojcash(double darpu, boolean loj, boolean okresloj) throws NullPointerException {
-
+    double okreslojCash(double darpu, boolean loj, boolean okresLoj) throws NullPointerException {
         double value;
-
         try {
-            if (okresloj && loj) {
+            if (okresLoj && loj) {
                 darpu = darpu * 0.3;
                 value = darpu;
             } else {
@@ -86,13 +83,11 @@ public class ProvisionSingle {
             }
         } catch (NullPointerException e) {
             value = 0;
-            System.out.println("npe");
         }
         return value;
     }
 
-
-    double reccash(double darpu, boolean rec) {
+    double recCash(double darpu, boolean rec) {
 
         if (rec) {
             darpu = darpu * 0.2;
@@ -102,8 +97,7 @@ public class ProvisionSingle {
         }
     }
 
-    double msccash(double darpu, boolean msc) {
-
+    double mcsCash(double darpu, boolean msc) {
         if (msc) {
             darpu = darpu * 0.2;
             return darpu;
@@ -113,7 +107,6 @@ public class ProvisionSingle {
     }
 
     double segmentcash(double darpu, int seg) {
-
         if (seg == 3) {
             return darpu * 0.1;
         } else if (seg == 4 || seg == 5) {
