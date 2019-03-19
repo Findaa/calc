@@ -45,7 +45,7 @@ public class CustomRestController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/dupa")
+    @GetMapping("/a")
     @ResponseBody
     public String getResult(@RequestParam(value = "premium") int premium,
                             @RequestParam(value = "fcr") int fcr,
