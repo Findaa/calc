@@ -1,6 +1,7 @@
 package com.upcprovision.calc.controller;
 
 
+import lombok.Getter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String viewLogin() { return "login"; }
 
     @GetMapping("/app")
@@ -46,5 +47,11 @@ public class LoginController {
     @GetMapping("/login?logout")
     public String viewLogout(){
         return "redirect:/index";
+    }
+
+    @GetMapping("/oauthLogin")
+    public String fbLogin()
+    {
+        return "fblogin";
     }
 }

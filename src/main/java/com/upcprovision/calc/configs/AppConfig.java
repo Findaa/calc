@@ -40,4 +40,3 @@ public class AppConfig implements WebMvcConfigurer {
         return new BCryptPasswordEncoder(11);
     }
 }
-

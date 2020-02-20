@@ -20,8 +20,7 @@ public class VerificationToken {
 
     private Date expiryDate;
 
-    VerificationToken() {
-    }
+    VerificationToken() {}
 
     public Long getId() {
         return id;

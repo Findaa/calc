@@ -16,7 +16,7 @@
 
 <div class="relation">
     <p>
-        <form:form method="post" action="/useradd" modelAttribute="deal">
+        <form:form method="post" action="/app/useradd" modelAttribute="deal">
     <p id="loginpagelabel">Podaj dane</p>
     <d>NrLogowy IdKlienta DeltaArpu Segment</d>
     <br/>

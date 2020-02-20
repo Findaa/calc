@@ -4,10 +4,7 @@ import com.upcprovision.calc.dto.TicketDTO;
 import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;
 import com.upcprovision.calc.repos.tickets.TicketServices;
-import com.upcprovision.calc.security.CustomUserDetails;
-import com.upcprovision.calc.services.DateServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,10 +58,13 @@ public class TicketsDatabaseController {
     public String editTicket(@ModelAttribute("ticket") TicketDTO modelTicket, HttpSession session, @SessionAttribute("statuses") List<TicketStatus> statuses) {
 
         var id = session.getAttribute("ticketId");
+
+
         TicketDTO ticketDTO = new TicketDTO(
                 modelTicket.isClosed(),
                 modelTicket.getCurrentGroup(),
                 modelTicket.getStatusUpdate());
+        System.out.println("Username ticket dto: " + ticketDTO.getAuthorityUsername());
         ticketServices.addStatus(ticketDTO, Integer.parseInt(id.toString()));
         return "redirect:/ticketapp/viewticket=tt" + id;
     }

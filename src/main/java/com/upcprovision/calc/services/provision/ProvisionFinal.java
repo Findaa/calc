@@ -15,7 +15,7 @@ import java.math.RoundingMode;
 
 
 @Service
-public class ProvisionFinal {
+public class    ProvisionFinal {
     public double calc(int i, Target target) throws MathArithmeticException {
         BigDecimal q = BigDecimal.valueOf(0.2);
         BigDecimal p = BigDecimal.valueOf(0.4);

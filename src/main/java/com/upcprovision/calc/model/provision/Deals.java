@@ -23,7 +23,7 @@ public class Deals {
    private double utarg;
    private double lojCash;
    private double recCash;
-   private double mcsCash;
+   private double mscCash;
    private double segCash;
    private boolean newClient=false;
 
@@ -41,7 +41,7 @@ public class Deals {
     }
 
     public Deals(String log, double clientId, double darpu, int segment, boolean loj, boolean recomended, boolean okresLoj,
-                 boolean msc, double utarg, double lojCash, double recCash, double mcsCash, double segCash, boolean newClient) {
+                 boolean msc, double utarg, double lojCash, double recCash, double mscCash, double segCash, boolean newClient) {
         this.log = log;
         this.clientId = clientId;
         this.darpu = darpu;
@@ -53,13 +53,13 @@ public class Deals {
         this.utarg = utarg;
         this.lojCash = lojCash;
         this.recCash = recCash;
-        this.mcsCash = mcsCash;
+        this.mscCash = mscCash;
         this.segCash = segCash;
         this.newClient = newClient;
 
     }
 
-    public Deals(Long id, String log, double clientId, double darpu, int segment, boolean loj, boolean recomended, boolean okresLoj, boolean msc, double utarg, double lojCash, double recCash, double mcsCash, double segCash) {
+    public Deals(Long id, String log, double clientId, double darpu, int segment, boolean loj, boolean recomended, boolean okresLoj, boolean msc, double utarg, double lojCash, double recCash, double mscCash, double segCash) {
         this.id = id;
         this.log = log;
         this.clientId = clientId;
@@ -72,7 +72,7 @@ public class Deals {
         this.utarg = utarg;
         this.lojCash = lojCash;
         this.recCash = recCash;
-        this.mcsCash = mcsCash;
+        this.mscCash = mscCash;
         this.segCash = segCash;
     }
 
@@ -197,12 +197,12 @@ public class Deals {
         this.recCash = recCash;
     }
 
-    public double getMcsCash() {
-        return mcsCash;
+    public double getmscCash() {
+        return mscCash;
     }
 
-    public void setMcsCash(double mcsCash) {
-        this.mcsCash = mcsCash;
+    public void setmscCash(double mscCash) {
+        this.mscCash = mscCash;
     }
 
     public double getSegCash() {

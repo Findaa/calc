@@ -53,9 +53,13 @@ public class TicketServicesImpl implements TicketServices {
             ticketDto.setTicketCreator(ticketStatuses.get(ticketStatuses.size() - 1).getUsername());
             if (ticket.isClosed()) {
                 ticketDto.setClosedString("Yes");
+                if (ticketDto.getStatusUpdate().isEmpty()) {
+                    ticketDto.setStatusUpdate("Closed by: " + getUsername());
+                }
             } else {
                 ticketDto.setClosedString("No");
             }
+
 
             ticketDTOList.add(ticketDto);
         });
@@ -86,15 +90,15 @@ public class TicketServicesImpl implements TicketServices {
         }
 
         if (var == 1) {
-            System.out.println(id+": by ticket id");
+//            System.out.println(id+": by ticket id");
             return getTicketByTicketId(id);
         }
         if (var == 2) {
-            System.out.println(id+": by user id");
+//            System.out.println(id+": by user id");
             return getTicketsByUser(id);
-        }else {
-            System.out.println(id+": by client id");
-            System.out.println(getTicketByClient(id)+": getByClientId");
+        } else {
+//            System.out.println(id+": by client id");
+//            System.out.println(getTicketByClient(id)+": getByClientId");
             return getTicketByClient(id);
         }
     }
@@ -107,17 +111,14 @@ public class TicketServicesImpl implements TicketServices {
     @Override
     public List<Ticket> getTicketByClient(String id) {
 
-        Ticket ticketz = ticketRepo.findAllByClientId(23301).get(0);
-
-        System.out.println(id+": getByClientMethod id");
-        System.out.println(Long.toString(ticketz.getClientId())+": get id");
-        System.out.println(getAll().stream().filter(ticket ->
-                Integer.parseInt(Long.toString(ticket.getClientId())) == Integer.parseInt(id))
-                .collect(Collectors.toList()).toString());
-
-        return getAll().stream().filter(ticket ->
-                Integer.parseInt(Long.toString(ticket.getClientId())) == Integer.parseInt(id))
-                .collect(Collectors.toList());
+        try {
+            return getAll().stream().filter(ticket ->
+                    Integer.parseInt(Long.toString(ticket.getClientId())) == Integer.parseInt(id))
+                    .collect(Collectors.toList());
+        } catch (Exception e){
+            System.out.println("ParseException");
+            return null;
+        }
     }
 
     @Override
@@ -134,7 +135,7 @@ public class TicketServicesImpl implements TicketServices {
         Long ticketid;
         try {
             ticketid = Long.valueOf(ticketNumber.toString());
-        }catch (ArithmeticException ae) {
+        } catch (ArithmeticException ae) {
             ticketid = 0L;
         }
         return Collections.singletonList(ticketRepo.findAllById(ticketid));
@@ -147,9 +148,6 @@ public class TicketServicesImpl implements TicketServices {
 
     @Override
     public void addTicket(TicketDTO ticketDto) {
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
 
         TicketStatus ticketStatus = new TicketStatus();
         ArrayList<TicketStatus> list = new ArrayList<>();
@@ -173,7 +171,7 @@ public class TicketServicesImpl implements TicketServices {
         ArrayList<TicketStatus> statuses = ticket.getTicketStatuses();
         TicketStatus ticketStatus =
                 new TicketStatus(getUsername(), ticketDTO.getStatusUpdate(), Date.from(Instant.now()));
-        System.out.println(Date.from(Instant.now())+": addStatus date");
+        System.out.println(Date.from(Instant.now()) + ": addStatus date");
         statuses.add(ticketStatus);
         ticket.setTicketStatuses(statuses);
         ticket.setClosed(ticketDTO.isClosed());
@@ -182,7 +180,7 @@ public class TicketServicesImpl implements TicketServices {
     }
 
     @Override
-    public List<Ticket> getAllByTimestamp(String timestamp){
+    public List<Ticket> getAllByTimestamp(String timestamp) {
         return getAll().stream().filter(ticket ->
                 ticket
                         .getTicketStatuses().get(0).getDate()

@@ -7,11 +7,12 @@ import com.upcprovision.calc.services.provision.DealsServices;
 import com.upcprovision.calc.services.provision.ProvisionFinal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CustomRestController {
@@ -34,7 +35,7 @@ public class CustomRestController {
     @GetMapping("/getDealsData")
     @ResponseBody
     public List<Deals> getDealsData() {
-        return dealsServices.findAll();
+        return dealsServices.findImputed();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -45,7 +46,7 @@ public class CustomRestController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/dupa")
+    @GetMapping("/a")
     @ResponseBody
     public String getResult(@RequestParam(value = "premium") int premium,
                             @RequestParam(value = "fcr") int fcr,
@@ -56,10 +57,15 @@ public class CustomRestController {
                             @RequestParam(value = "cnps") int cnps,
                             @RequestParam(value = "cupgrade") int cupgrade,
                             @RequestParam(value = "arpu") int arpu) {
-        System.out.println("Website is: ");
         Target target = new Target(fcr, cfcr, nps, cnps, upgradex, cupgrade, premium, cpremium, arpu);
+        System.out.println("Website is: " + target.getArpu());
 
         return Double.toString(provisionFinal.calc(0, target));
     }
+//
+//    @CrossOrigin(origins = "http://localhost:3030")
+//    @GetMapping("/sendNewDeal")
+//    public void registerNewDeal(@RequestParam)
+
 
 }

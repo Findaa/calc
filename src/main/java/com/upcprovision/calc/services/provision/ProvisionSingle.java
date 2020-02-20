@@ -27,8 +27,7 @@ public class ProvisionSingle {
                 p = p.divide(BigDecimal.valueOf(2));
                 System.out.println("Nowy");
             }
-        }
-        else {
+        } else {
             boolean flag = true;
             if (darpu > 0 && flag || darpu <= (-10) && flag) {
                 p = BigDecimal.valueOf((darpu / 2) + 5.0);
@@ -97,7 +96,7 @@ public class ProvisionSingle {
         }
     }
 
-    double mcsCash(double darpu, boolean msc) {
+    double mscCash(double darpu, boolean msc) {
         if (msc) {
             darpu = darpu * 0.2;
             return darpu;

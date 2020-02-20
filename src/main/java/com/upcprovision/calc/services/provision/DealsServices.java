@@ -15,6 +15,7 @@ public class DealsServices{
     public DealsServices(DealsRepo dealsRepo) {
         this.dealsRepo = dealsRepo;
     }
+
     public List<Deals> getByLog(String log) {
         return dealsRepo.findAllByLog(log);
     }
@@ -25,4 +26,20 @@ public class DealsServices{
     public void deleteById(Long id){dealsRepo.deleteById(id);}
     public List<Deals> findAllByLog(String log){return dealsRepo.findAllByLog(log);}
     public List<Deals> findAll(){return dealsRepo.findAll();}
+    public List<Deals> findImputed(){
+        List<Deals> result = dealsRepo.findAll();
+
+        result.forEach(deal ->{
+            if(deal.getLojCash() == 0) deal.setLojCash(0);
+            if(deal.getSegCash() == 0) deal.setSegCash(0);
+            if(deal.getSegment() == 0) deal.setSegment(0);
+            if(deal.getRecCash() == 0) deal.setRecCash(0);
+            if(deal.getmscCash() == 0) deal.setmscCash(110);
+
+        });
+
+        return result;
+
+
+    }
 }

@@ -31,7 +31,7 @@ public class ConvertService {
                 dealsDTO.isOkresloj()),
                 provisionSingle.recCash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
                 dealsDTO.isRecomended()),
-                provisionSingle.mcsCash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
+                provisionSingle.mscCash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
                 dealsDTO.isMsc()),
                 provisionSingle.segmentcash(provisionSingle.provisionSingleCalc(dealsDTO, 2),
                 dealsDTO.getSegment()),
@@ -53,7 +53,7 @@ public class ConvertService {
             deal.setUtarg(provisionSingle.provisionSingleCalc(dealsDTO, 1));
             deal.setLojCash(provisionSingle.okreslojCash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.isLoj(), dealsDTO.isOkresloj()));
             deal.setRecCash(provisionSingle.recCash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.isRecomended()));
-            deal.setMcsCash(provisionSingle.mcsCash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.isMsc()));
+            deal.setmscCash(provisionSingle.mscCash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.isMsc()));
             deal.setSegCash(provisionSingle.segmentcash(provisionSingle.provisionSingleCalc(dealsDTO, 2), dealsDTO.getSegment()));
             deal.setNewClient(dealsDTO.isnewClient());
             return deal;

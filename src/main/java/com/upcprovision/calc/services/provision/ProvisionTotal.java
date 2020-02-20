@@ -29,8 +29,6 @@ public class ProvisionTotal {
         }
         return total;
     }
-
-
 }
 
 

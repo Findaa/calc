@@ -78,6 +78,8 @@ public class RegisterController {
         } else {
             model.addAttribute("x", "nieudane");
         }
+
+        System.out.println(" test role w/o ");
         return "register";
     }
 
