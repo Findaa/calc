@@ -57,7 +57,7 @@ public class TicketsDatabaseController {
     @PostMapping("/ticketapp/addStatus")
     public String editTicket(@ModelAttribute("ticket") TicketDTO modelTicket, HttpSession session, @SessionAttribute("statuses") List<TicketStatus> statuses) {
 
-        var id = session.getAttribute("ticketId");
+        String id = session.getAttribute("ticketId").toString();
 
 
         TicketDTO ticketDTO = new TicketDTO(
