@@ -14,7 +14,6 @@ import java.util.Date;
 
 @Service
 public class DateServices {
-
     @Autowired
     public DateServices() {
     }
@@ -23,12 +22,12 @@ public class DateServices {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         dateInString = "31-08-1982 10:20:56";
         Date date;
+
         try {
             date = sdf.parse(dateInString);
         } catch (ParseException pe) {
         date = null;
         }
-
         return date;
     }
 
@@ -41,7 +40,6 @@ public class DateServices {
     public int[] dateToArray(Date date){
         int[] i = new int[5];
         LocalDateTime localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-
         i[0] = localDate.getYear();
         i[1] = localDate.getMonthValue();
         i[2] = localDate.getDayOfMonth();

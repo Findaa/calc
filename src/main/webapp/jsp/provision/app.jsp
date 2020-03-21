@@ -14,7 +14,7 @@
 <div class="tt">
 
     <form:form method="get" action="/app/getdeals">
-        <input type="submit" value="Obecna Prowizjaa">
+        <input type="submit" value="Obecna Prowizja">
     </form:form><br/>
 
     <form:form method="get" action="/targetadd">

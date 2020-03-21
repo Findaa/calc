@@ -21,8 +21,8 @@
         <input type="submit" value="Zaloguj"/>
     </form:form><br/>
 
-        <form:form method="get" action="register">
-            <input type="submit" value="Zarejestruj"></form:form><br/>
+    <form:form method="get" action="register">
+        <input type="submit" value="Zarejestruj"></form:form><br/>
     Test acc: test/131<br/>
 
 </div>

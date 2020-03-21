@@ -1,11 +1,13 @@
 package com.upcprovision.calc.model.provision;
 
+import lombok.Data;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Component
+@Data
 public class Target {
     @Nullable private BigDecimal premium;
     @Nullable private BigDecimal fcr;
@@ -19,7 +21,9 @@ public class Target {
 
     public Target(){
     }
-    public Target(BigDecimal asdasdasd, BigDecimal cfcr, BigDecimal nps, BigDecimal cnps, BigDecimal upgrade, BigDecimal cupgrade, BigDecimal premium, BigDecimal cpremium, BigDecimal arpu){
+
+    public Target(BigDecimal asdasdasd, BigDecimal cfcr, BigDecimal nps, BigDecimal cnps, BigDecimal upgrade,
+                  BigDecimal cupgrade, BigDecimal premium, BigDecimal cpremium, BigDecimal arpu){
         this.premium=premium;
         this.fcr=asdasdasd;
         this.nps=nps;
@@ -44,84 +48,4 @@ public class Target {
         this.arpu= BigDecimal.valueOf(arpu);
     }
 
-    @Nullable
-    public BigDecimal getPremium() {
-        return premium;
-    }
-
-    public void setPremium(@Nullable BigDecimal premium) {
-        this.premium = premium;
-    }
-
-    @Nullable
-    public BigDecimal getFcr() {
-        return fcr;
-    }
-
-    public void setFcr(@Nullable BigDecimal fcr) {
-        this.fcr = fcr;
-    }
-
-    @Nullable
-    public BigDecimal getNps() {
-        return nps;
-    }
-
-    public void setNps(@Nullable BigDecimal nps) {
-        this.nps = nps;
-    }
-
-    @Nullable
-    public BigDecimal getUpgrade() {
-        return upgrade;
-    }
-
-    public void setUpgrade(@Nullable BigDecimal upgrade) {
-        this.upgrade = upgrade;
-    }
-
-    @Nullable
-    public BigDecimal getCpremium() {
-        return cpremium;
-    }
-
-    public void setCpremium(@Nullable BigDecimal cpremium) {
-        this.cpremium = cpremium;
-    }
-
-    @Nullable
-    public BigDecimal getCfcr() {
-        return cfcr;
-    }
-
-    public void setCfcr(@Nullable BigDecimal cfcr) {
-        this.cfcr = cfcr;
-    }
-
-    @Nullable
-    public BigDecimal getCnps() {
-        return cnps;
-    }
-
-    public void setCnps(@Nullable BigDecimal cnps) {
-        this.cnps = cnps;
-    }
-
-    @Nullable
-    public BigDecimal getCupgrade() {
-        return cupgrade;
-    }
-
-    public void setCupgrade(@Nullable BigDecimal cupgrade) {
-        this.cupgrade = cupgrade;
-    }
-
-    @Nullable
-    public BigDecimal getArpu() {
-        return arpu;
-    }
-
-    public void setArpu(@Nullable BigDecimal arpu) {
-        this.arpu = arpu;
-    }
 }

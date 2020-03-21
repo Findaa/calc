@@ -1,13 +1,14 @@
 package com.upcprovision.calc.model;
 
-import com.upcprovision.calc.security.Role;
+import com.upcprovision.calc.security.user.Role;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Data
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
@@ -22,7 +23,6 @@ public class User {
     private boolean active;
     @Column(name= "leader")
     private int leaderid;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns =
@@ -43,69 +43,13 @@ public class User {
     public User() { }
 
     public User(User user) {
-        this.active = user.getActive();
+        this.active = user.isActive();
         this.mail = user.getMail();
         this.roles = user.getRoles();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.id = user.getId();
         this.leaderid = user.getLeaderid();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public boolean getActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public int getLeaderid() {
-        return leaderid;
-    }
-
-    public void setLeaderid(int leaderid) {
-        this.leaderid = leaderid;
     }
 
 }

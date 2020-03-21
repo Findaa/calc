@@ -71,7 +71,7 @@
                     <td><c:out value="${pp.loj}"/></td>
                     <td><c:out value="${pp.recCash}"/></td>
                     <td><c:out value="${pp.lojCash}"/></td>
-                    <td><c:out value="${pp.mcsCash}"/></td>
+                    <td><c:out value="${pp.mscCash}"/></td>
                     <td><font color="fuchsia"><c:out value="${pp.utarg}"/></font></td>
                     <td><a href="/app/getdealsdone/edit/${pp.id}"> opcje</a></td>
                 </tr>
@@ -119,7 +119,7 @@
                     <td><c:out value="${pp.loj}"/></td>
                     <td><c:out value="${pp.recCash}"/></td>
                     <td><c:out value="${pp.lojCash}"/></td>
-                    <td><c:out value="${pp.mcsCash}"/></td>
+                    <td><c:out value="${pp.mscCash}"/></td>
                     <td><font color="fuchsia"><c:out value="${pp.utarg}"/></font></td>
                 </tr>
             </c:forEach>

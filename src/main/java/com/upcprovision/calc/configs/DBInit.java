@@ -2,12 +2,12 @@ package com.upcprovision.calc.configs;
 
 import com.upcprovision.calc.model.provision.Deals;
 import com.upcprovision.calc.model.tickets.Ticket;
-import com.upcprovision.calc.security.Role;
+import com.upcprovision.calc.security.user.Role;
 import com.upcprovision.calc.model.User;
 import com.upcprovision.calc.repos.UserRepo;
-import com.upcprovision.calc.services.provision.DealsServices;
 import com.upcprovision.calc.model.tickets.TicketStatus;
-import com.upcprovision.calc.repos.tickets.TicketRepo;
+import com.upcprovision.calc.repos.TicketRepo;
+import com.upcprovision.calc.services.provision.DealsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
@@ -18,17 +18,16 @@ import java.util.*;
 
 @Component
 public class DBInit {
-
     @Autowired
-    public DBInit(UserRepo userRepo, DealsServices dealsServices, TicketRepo ticketRepo) {
+    public DBInit(UserRepo userRepo, TicketRepo ticketRepo, DealsServices dealsServices) {
         this.userRepo = userRepo;
-        this.dealsServices = dealsServices;
         this.ticketRepo = ticketRepo;
+        this.dealsServices = dealsServices;
     }
 
     private UserRepo userRepo;
-    private DealsServices dealsServices;
     private TicketRepo ticketRepo;
+    private DealsServices dealsServices;
 
     @PostConstruct
     public void initUsers() {
@@ -39,7 +38,6 @@ public class DBInit {
 
     }
 
-    //LeaderID 99 == Leader Account
     @PostConstruct
     public void initSuper() {
         Set<Role> roles = new HashSet<>();
@@ -54,7 +52,7 @@ public class DBInit {
         for (long i = 0L; i < 60L; i++) {
             dealsServices.add(new Deals(
                     i, "test", 14567, 10 + i, 2, true, true,
-                    false, false, (int) i%5, 10, 10, 10, 10));
+                    false, false, (int) i % 5, 10, 10, 10, 10));
         }
     }
 
@@ -68,14 +66,9 @@ public class DBInit {
         ticketStatus2.setUsername("wiem");
         ticketStatus.setDate(Date.from(Instant.now()));
         ticketStatus2.setDate(Date.from(Instant.now()));
-
-        System.out.println(ticketStatus.getUsername()+" "+ticketStatus2.getUsername()+": usernamesPostConstruct");
-
         ArrayList<TicketStatus> list = new ArrayList();
-
         list.add(ticketStatus);
         list.add(ticketStatus2);
-
         Ticket ticket = new Ticket(list, 23301, false, "helpdesk");
         ticketRepo.save(ticket);
     }

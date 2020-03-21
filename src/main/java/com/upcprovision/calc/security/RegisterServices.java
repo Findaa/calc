@@ -3,7 +3,7 @@ package com.upcprovision.calc.security;
 import com.upcprovision.calc.dto.UserDTO;
 import com.upcprovision.calc.model.User;
 import com.upcprovision.calc.repos.TokenRepo;
-import com.upcprovision.calc.repos.UserService;
+import com.upcprovision.calc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +11,14 @@ import java.util.Date;
 
 @Service
 public class RegisterServices {
-
-    private UserService userService;
-    private TokenRepo tokenRepo;
-
     @Autowired
     public RegisterServices(UserService userService, TokenRepo tokenRepo) {
         this.userService = userService;
         this.tokenRepo = tokenRepo;
     }
+
+    private UserService userService;
+    private TokenRepo tokenRepo;
 
     public boolean passCompare(UserDTO userDTO) {
         return userDTO.getPassword().equals(userDTO.getPassword2());
@@ -33,8 +32,8 @@ public class RegisterServices {
         return "Dziekuje za rejestracje. Kliknij link aby potwierdzyc. " + System.lineSeparator() + "http://localhost:8080/active?id=" + token;
     }
 
-    public void activate(String token) throws NullPointerException{
-        VerificationToken entityToken = tokenRepo.getByToken(token);
+    public void activate(String token) throws NullPointerException {
+        RegisterVerificationToken entityToken = tokenRepo.getByToken(token);
         User user = new User();
         if (entityToken != null) {
             user = entityToken.getUser();
@@ -46,11 +45,11 @@ public class RegisterServices {
                     user.setActive(true);
                     userService.add(user);
                 }
-            }catch (NullPointerException e){
-                System.out.println("NPE on activation: "+user.getUsername()+" " +
-                        "\n Current status: " + user.getActive()+"" +
-                        "\n Expiry Date: " + entityToken.getExpiryDate() +"" +
-                        "\n Current Date: "+ new Date());
+            } catch (NullPointerException e) {
+                System.out.println("NPE on activation: " + user.getUsername() + " " +
+                        "\n Current status: " + user.isActive() + "" +
+                        "\n Expiry Date: " + entityToken.getExpiryDate() + "" +
+                        "\n Current Date: " + new Date());
             }
         }
     }

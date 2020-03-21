@@ -1,6 +1,6 @@
 package com.upcprovision.calc.configs;
 
-import com.upcprovision.calc.security.CustomUserDetailsService;
+import com.upcprovision.calc.security.user.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,19 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @Order(1)
 @EnableWebSecurity
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final CustomUserDetailsService userDetailsService;
-
     @Autowired
     public SpringSecurityConfig(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+
+    private final CustomUserDetailsService userDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -31,7 +31,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
 //        final TokenAuthenticationFilter tokenFilter = new TokenAuthenticationFilter();
 //        http.addFilterBefore(tokenFilter, BasicAuthenticationFilter.class);
 
@@ -45,6 +45,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .anyRequest()
                 .permitAll()
+                .and().logout().logoutSuccessUrl("/").permitAll()
+                .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .formLogin().loginPage("/login")
                 .loginProcessingUrl("/login")
@@ -58,6 +60,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder(11);}
-
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(11);
+    }
 }

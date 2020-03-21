@@ -1,10 +1,11 @@
 package com.upcprovision.calc.dto;
 
 import com.upcprovision.calc.model.tickets.TicketStatus;
+import com.upcprovision.calc.security.user.CustomUserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TicketDTO implements Serializable {
 
@@ -18,10 +19,17 @@ public class TicketDTO implements Serializable {
     private String ticketCreator;
     private String closedString;
 
+    public String getAuthorityUsername() {
+        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getUsername();
+    }
 
-    public TicketDTO() {}
+
+    public TicketDTO() {
+    }
 
     public TicketDTO(boolean closed, String currentGroup, String statusUpdate) {
+        this.username = getAuthorityUsername();
         this.closed = closed;
         this.currentGroup = currentGroup;
         this.statusUpdate = statusUpdate;

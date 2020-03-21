@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="<c:url value="/resources/static/css/style.css"/>" type="text/css"/>
 </head>
 <body>
+
 <div>
+<sec:authorize access="isAuthenticated()">
     <div class="relation">
         <form:form method="post" action="/ticketapp/addStatus" modelAttribute="ticket" name="frm" id="frm">
             Ticket ID: ${oldTicket.id}
@@ -26,14 +28,17 @@
                 <option value="cbo" ${param.currentGroup == 'cbo' ? 'selected' : ''}>cbo</option>
             </select>
             <table>
+                <tr><td>Meta</td> <td>Update</td></tr>
                 <c:forEach items="${statuses}" var="status">
-                    <tr><td> -- </td><td>${status.username}, ${status.date}</td></tr>
-                    <tr><td> ${status.statusUpdate}</td><td> -- </td></tr>
+                    <tr><td>${status.username}, ${status.date}</td>
+                        <td> ${status.statusUpdate}</td></tr>
+                    <c:if test=""
                 </c:forEach>
             </table>
             <input type="submit" value="Dodaj wpis"/>
         </form:form>
     </div>
+</sec:authorize>
 
     <div class="logout">
         <sec:authorize access="isAuthenticated()">

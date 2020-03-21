@@ -1,5 +1,6 @@
 package com.upcprovision.calc.model.tickets;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -9,8 +10,8 @@ import java.util.ArrayList;
 
 @Component
 @Entity
+@Data
 public class Ticket implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ticket_id")
@@ -31,43 +32,4 @@ public class Ticket implements Serializable {
     public Ticket() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ArrayList<TicketStatus> getTicketStatuses() {
-        return ticketStatuses;
-    }
-
-    public void setTicketStatuses(ArrayList<TicketStatus> ticketStatuses) {
-        this.ticketStatuses = ticketStatuses;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
-
-    public boolean isClosed() {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) {
-        this.closed = closed;
-    }
-
-    public String getCurrentGroup() {
-        return currentGroup;
-    }
-
-    public void setCurrentGroup(String currentGroup) {
-        this.currentGroup = currentGroup;
-    }
 }

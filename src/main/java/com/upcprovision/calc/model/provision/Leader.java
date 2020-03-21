@@ -11,7 +11,6 @@ import javax.persistence.Id;
 @Data
 @Entity
 public class Leader {
-
     @Id
     private int leaderid;
     private String username;
