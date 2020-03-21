@@ -1,4 +1,4 @@
-package com.upcprovision.calc.repos.provision;
+package com.upcprovision.calc.repos;
 
 import com.upcprovision.calc.model.provision.Deals;
 import org.springframework.data.repository.CrudRepository;

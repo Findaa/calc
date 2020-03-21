@@ -1,8 +1,9 @@
-package com.upcprovision.calc.security;
+package com.upcprovision.calc.security.user;
 
 import com.upcprovision.calc.model.User;
 import com.upcprovision.calc.repos.UserRepo;
-import com.upcprovision.calc.repos.UserService;
+import com.upcprovision.calc.security.user.Role;
+import com.upcprovision.calc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;

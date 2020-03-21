@@ -11,24 +11,26 @@ import java.util.Date;
 import java.util.Random;
 
 @Service
-public class VerificationTokenService {
-    private static final int EXPIRATION = 60*24;
-
+public class RegisterVerificationTokenService {
     @Autowired
-    TokenRepo tokenRepo;
+    public RegisterVerificationTokenService(TokenRepo tokenRepo) {
+        this.tokenRepo = tokenRepo;
+    }
 
-    private String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private char[] symbols = CHARACTERS.toCharArray();
+    private static final int EXPIRATION = 60 * 24;
+    private char[] symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+    private TokenRepo tokenRepo;
 
-    public VerificationToken generateToken(User user) {
+    public RegisterVerificationToken generateToken(User user) {
         char[] tokeno = new char[10];
-        for(int i=0; i<tokeno.length; i++){
+
+        for (int i = 0; i < tokeno.length; i++) {
             int idx = new Random().nextInt(symbols.length);
             char random = symbols[idx];
-           tokeno[i]=random;
+            tokeno[i] = random;
         }
 
-        VerificationToken token = new VerificationToken();
+        RegisterVerificationToken token = new RegisterVerificationToken();
         token.setUser(user);
         token.setExpiryDate(calculateExpiryDate(EXPIRATION));
         token.setToken(String.valueOf(tokeno));
@@ -41,7 +43,7 @@ public class VerificationTokenService {
         try {
             cal.setTime(new Timestamp(cal.getTime().getTime()));
             cal.add(Calendar.MINUTE, expiryTimeInMinutes);
-        }catch (NullPointerException npe){
+        } catch (NullPointerException npe) {
             cal.add(Calendar.MINUTE, 1);
             System.out.println("NPE on calculateExpiryDate, set on 1 minute");
         }

@@ -1,6 +1,6 @@
-package com.upcprovision.calc.services;
+package com.upcprovision.calc.services.implementations;
 
-import com.upcprovision.calc.repos.MailService;
+import com.upcprovision.calc.services.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MailServiceImpl implements MailService {
-
-    private JavaMailSender emailSender;
-
     @Autowired
     public MailServiceImpl(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
+
+    private JavaMailSender emailSender;
 
     @Override
     @Async

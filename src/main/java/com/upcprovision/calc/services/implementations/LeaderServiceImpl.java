@@ -1,9 +1,11 @@
-package com.upcprovision.calc.services.provision;
+package com.upcprovision.calc.services.implementations;
 
-import com.upcprovision.calc.security.CustomUserDetails;
+import com.upcprovision.calc.security.user.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Deals;
 import com.upcprovision.calc.model.User;
-import com.upcprovision.calc.repos.UserService;
+import com.upcprovision.calc.services.UserService;
+import com.upcprovision.calc.services.provision.DealsServices;
+import com.upcprovision.calc.services.provision.LeaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LeaderServiceImpl implements com.upcprovision.calc.repos.provision.LeaderService {
+public class LeaderServiceImpl implements LeaderService {
 
     private UserService userService;
     private DealsServices dealsServices;

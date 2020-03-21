@@ -1,4 +1,4 @@
-package com.upcprovision.calc.security;
+package com.upcprovision.calc.security.user;
 
 import com.upcprovision.calc.model.User;
 import com.upcprovision.calc.repos.UserRepo;

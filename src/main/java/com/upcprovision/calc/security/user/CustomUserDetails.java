@@ -1,4 +1,4 @@
-package com.upcprovision.calc.security;
+package com.upcprovision.calc.security.user;
 
 import com.upcprovision.calc.model.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,7 +50,7 @@ public class CustomUserDetails extends User implements UserDetails, Serializable
 
     @Override
     public boolean isEnabled() {
-        return super.getActive();
+        return super.isActive();
     }
 
 }

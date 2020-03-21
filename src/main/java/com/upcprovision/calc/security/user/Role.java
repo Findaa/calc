@@ -1,4 +1,4 @@
-package com.upcprovision.calc.security;
+package com.upcprovision.calc.security.user;
 import javax.persistence.*;
 import java.io.Serializable;
 

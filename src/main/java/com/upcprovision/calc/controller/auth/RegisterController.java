@@ -1,30 +1,25 @@
-package com.upcprovision.calc.controller;
+package com.upcprovision.calc.controller.auth;
 
-import com.upcprovision.calc.controller.provision.ControllerServices;
+import com.upcprovision.calc.controller.ControllerServices;
 import com.upcprovision.calc.dto.UserDTO;
-import com.upcprovision.calc.security.Role;
 import com.upcprovision.calc.model.User;
-import com.upcprovision.calc.repos.provision.LeaderService;
+import com.upcprovision.calc.services.provision.LeaderService;
 import com.upcprovision.calc.repos.UserRepo;
 
-import com.upcprovision.calc.repos.MailService;
+import com.upcprovision.calc.services.MailService;
 import com.upcprovision.calc.security.RegisterServices;
-import com.upcprovision.calc.security.VerificationTokenService;
+import com.upcprovision.calc.security.RegisterVerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Controller
 public class RegisterController {
-
     @Autowired
     public RegisterController(RegisterServices registerServices, UserRepo userRepo,
-                              LeaderService leaderService, VerificationTokenService tokenService,
+                              LeaderService leaderService, RegisterVerificationTokenService tokenService,
                               MailService mailService, ControllerServices controllerServices) {
         this.registerServices = registerServices;
         this.userRepo = userRepo;
@@ -37,11 +32,9 @@ public class RegisterController {
     private RegisterServices registerServices;
     private UserRepo userRepo;
     private LeaderService leaderService;
-    private VerificationTokenService tokenService;
+    private RegisterVerificationTokenService tokenService;
     private MailService mailService;
     private ControllerServices controllerServices;
-
-
 
     @GetMapping("/register")
     public String viewRegister(Model model) {

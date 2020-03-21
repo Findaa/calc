@@ -1,6 +1,6 @@
 package com.upcprovision.calc.configs;
 
-import com.upcprovision.calc.security.CustomUserDetailsService;
+import com.upcprovision.calc.security.user.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,13 +18,12 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final CustomUserDetailsService userDetailsService;
-
     @Autowired
     public SpringSecurityConfig(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+
+    private final CustomUserDetailsService userDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -32,7 +31,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
 //        final TokenAuthenticationFilter tokenFilter = new TokenAuthenticationFilter();
 //        http.addFilterBefore(tokenFilter, BasicAuthenticationFilter.class);
 
@@ -61,7 +60,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-
-    public PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder(11);}
-
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(11);
+    }
 }

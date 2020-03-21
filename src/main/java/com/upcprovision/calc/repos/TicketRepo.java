@@ -1,4 +1,4 @@
-package com.upcprovision.calc.repos.tickets;
+package com.upcprovision.calc.repos;
 
 import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;

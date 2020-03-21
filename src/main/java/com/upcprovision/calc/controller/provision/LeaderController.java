@@ -1,11 +1,11 @@
 package com.upcprovision.calc.controller.provision;
 
 
-import com.upcprovision.calc.repos.provision.LeaderService;
-import com.upcprovision.calc.security.CustomUserDetails;
-import com.upcprovision.calc.repos.UserService;
+import com.upcprovision.calc.services.provision.LeaderService;
+import com.upcprovision.calc.security.user.CustomUserDetails;
+import com.upcprovision.calc.services.UserService;
 import com.upcprovision.calc.services.provision.DealsServices;
-import com.upcprovision.calc.services.provision.ProvisionTotal;
+import com.upcprovision.calc.services.provision.ProvisionCalculatorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,15 +18,15 @@ import javax.servlet.http.HttpSession;
 public class LeaderController {
 
     @Autowired
-    public LeaderController(ProvisionTotal provisionTotal, DealsServices dealsServices, LeaderService leaderService, UserService userService) {
-        this.provisionTotal = provisionTotal;
+    public LeaderController(ProvisionCalculatorServices provisionCalculatorServices, DealsServices dealsServices, LeaderService leaderService, UserService userService) {
+        this.provisionCalculatorServices = provisionCalculatorServices;
         this.dealsServices = dealsServices;
         this.leaderService = leaderService;
         this.userService = userService;
     }
 
     private LeaderService leaderService;
-    private ProvisionTotal provisionTotal;
+    private ProvisionCalculatorServices provisionCalculatorServices;
     private DealsServices dealsServices;
     private UserService userService;
 
@@ -50,7 +50,7 @@ public class LeaderController {
     public String databaseProcess(@ModelAttribute("id") String log, HttpSession session) {
         session.setAttribute("list", dealsServices.getByLog(log));
         session.setAttribute("numerlog", log);
-        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(log)));
+        session.setAttribute("total", provisionCalculatorServices.getTotalSales(provisionCalculatorServices.findAllByLog(log)));
         return "redirect:/leader/getdealsdone";
     }
 
@@ -64,7 +64,7 @@ public class LeaderController {
         int id = 1;
         session.setAttribute("list", leaderService.getTeamDeals(id));
         session.setAttribute("numerlog", id);
-        session.setAttribute("total", provisionTotal.getTotalSales(leaderService.getTeamDeals(id)));
+        session.setAttribute("total", provisionCalculatorServices.getTotalSales(leaderService.getTeamDeals(id)));
         return "redirect:/leader/teamresult";
     }
 

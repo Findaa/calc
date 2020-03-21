@@ -1,12 +1,11 @@
 package com.upcprovision.calc.dto;
 
 import com.upcprovision.calc.model.tickets.TicketStatus;
-import com.upcprovision.calc.security.CustomUserDetails;
+import com.upcprovision.calc.security.user.CustomUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TicketDTO implements Serializable {
 

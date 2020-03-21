@@ -1,10 +1,10 @@
 package com.upcprovision.calc.controller.api;
 
 import com.upcprovision.calc.model.provision.Target;
-import com.upcprovision.calc.security.CustomUserDetails;
+import com.upcprovision.calc.security.user.CustomUserDetails;
 import com.upcprovision.calc.model.provision.Deals;
 import com.upcprovision.calc.services.provision.DealsServices;
-import com.upcprovision.calc.services.provision.ProvisionFinal;
+import com.upcprovision.calc.services.provision.ProvisionCalculatorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,20 +16,14 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CustomRestController {
+    @Autowired
+    public CustomRestController(DealsServices dealsServices, ProvisionCalculatorServices provisionCalculatorServices) {
+        this.dealsServices = dealsServices;
+        this.provisionCalculatorServices = provisionCalculatorServices;
+    }
 
     private DealsServices dealsServices;
-    private ProvisionFinal provisionFinal;
-
-    public String getUsername() {
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getUsername();
-    }
-
-    @Autowired
-    public CustomRestController(DealsServices dealsServices, ProvisionFinal provisionFinal) {
-        this.dealsServices = dealsServices;
-        this.provisionFinal = provisionFinal;
-    }
+    private ProvisionCalculatorServices provisionCalculatorServices;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getDealsData")
@@ -58,14 +52,11 @@ public class CustomRestController {
                             @RequestParam(value = "cupgrade") int cupgrade,
                             @RequestParam(value = "arpu") int arpu) {
         Target target = new Target(fcr, cfcr, nps, cnps, upgradex, cupgrade, premium, cpremium, arpu);
-        System.out.println("Website is: " + target.getArpu());
-
-        return Double.toString(provisionFinal.calc(0, target));
+        return Double.toString(provisionCalculatorServices.calc(0, target));
     }
-//
-//    @CrossOrigin(origins = "http://localhost:3030")
-//    @GetMapping("/sendNewDeal")
-//    public void registerNewDeal(@RequestParam)
 
-
+    public String getUsername() {
+        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getUsername();
+    }
 }

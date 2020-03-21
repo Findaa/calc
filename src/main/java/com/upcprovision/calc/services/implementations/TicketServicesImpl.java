@@ -1,18 +1,17 @@
-package com.upcprovision.calc.services.tickets;
+package com.upcprovision.calc.services.implementations;
 
 
-import com.upcprovision.calc.security.CustomUserDetails;
+import com.upcprovision.calc.security.user.CustomUserDetails;
 import com.upcprovision.calc.dto.TicketDTO;
 import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;
-import com.upcprovision.calc.repos.tickets.TicketRepo;
-import com.upcprovision.calc.repos.tickets.TicketServices;
+import com.upcprovision.calc.repos.TicketRepo;
 import com.upcprovision.calc.services.DateServices;
+import com.upcprovision.calc.services.tickets.TicketServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -59,8 +58,6 @@ public class TicketServicesImpl implements TicketServices {
             } else {
                 ticketDto.setClosedString("No");
             }
-
-
             ticketDTOList.add(ticketDto);
         });
 
@@ -90,15 +87,11 @@ public class TicketServicesImpl implements TicketServices {
         }
 
         if (var == 1) {
-//            System.out.println(id+": by ticket id");
             return getTicketByTicketId(id);
         }
         if (var == 2) {
-//            System.out.println(id+": by user id");
             return getTicketsByUser(id);
         } else {
-//            System.out.println(id+": by client id");
-//            System.out.println(getTicketByClient(id)+": getByClientId");
             return getTicketByClient(id);
         }
     }
@@ -110,12 +103,11 @@ public class TicketServicesImpl implements TicketServices {
 
     @Override
     public List<Ticket> getTicketByClient(String id) {
-
         try {
             return getAll().stream().filter(ticket ->
                     Integer.parseInt(Long.toString(ticket.getClientId())) == Integer.parseInt(id))
                     .collect(Collectors.toList());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ParseException");
             return null;
         }
@@ -148,7 +140,6 @@ public class TicketServicesImpl implements TicketServices {
 
     @Override
     public void addTicket(TicketDTO ticketDto) {
-
         TicketStatus ticketStatus = new TicketStatus();
         ArrayList<TicketStatus> list = new ArrayList<>();
         ticketStatus.setUsername(getUsername());
@@ -166,12 +157,10 @@ public class TicketServicesImpl implements TicketServices {
 
     @Override
     public void addStatus(TicketDTO ticketDTO, int id) {
-
         Ticket ticket = ticketRepo.findAllById((long) id);
         ArrayList<TicketStatus> statuses = ticket.getTicketStatuses();
         TicketStatus ticketStatus =
                 new TicketStatus(getUsername(), ticketDTO.getStatusUpdate(), Date.from(Instant.now()));
-        System.out.println(Date.from(Instant.now()) + ": addStatus date");
         statuses.add(ticketStatus);
         ticket.setTicketStatuses(statuses);
         ticket.setClosed(ticketDTO.isClosed());
@@ -186,6 +175,4 @@ public class TicketServicesImpl implements TicketServices {
                         .getTicketStatuses().get(0).getDate()
                         .equals(dateServices.dateToArray(dateServices.stringToDate(timestamp)))).collect(Collectors.toList());
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.upcprovision.calc.repos.tickets;
+package com.upcprovision.calc.services.tickets;
 
 import com.upcprovision.calc.dto.TicketDTO;
 import com.upcprovision.calc.model.tickets.Ticket;

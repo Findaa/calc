@@ -1,7 +1,7 @@
-package com.upcprovision.calc.repos;
+package com.upcprovision.calc.services;
 
 import com.upcprovision.calc.model.User;
-import com.upcprovision.calc.security.Role;
+import com.upcprovision.calc.security.user.Role;
 
 import java.util.List;
 import java.util.Set;

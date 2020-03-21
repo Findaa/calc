@@ -1,4 +1,4 @@
-package com.upcprovision.calc.controller;
+package com.upcprovision.calc.controller.auth;
 
 
 import lombok.Getter;
@@ -17,12 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
-    @RequestMapping("/login")
-    public String viewLogin() { return "login"; }
-
-    @GetMapping("/app")
-    public String viewApp() { return "provision/app"; }
-
     @RequestMapping("/app/logout")
     public String viewLogout(HttpServletRequest rq, HttpServletResponse re) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -31,6 +25,12 @@ public class LoginController {
         }
         return "redirect:/index";
     }
+
+    @RequestMapping("/login")
+    public String viewLogin() { return "login"; }
+
+    @GetMapping("/app")
+    public String viewApp() { return "provision/app"; }
 
     @RequestMapping("/leader/logout")
     public String viewLeaderLogout(HttpServletRequest rq, HttpServletResponse re) {

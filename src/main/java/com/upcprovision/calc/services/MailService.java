@@ -1,4 +1,4 @@
-package com.upcprovision.calc.repos;
+package com.upcprovision.calc.services;
 
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;

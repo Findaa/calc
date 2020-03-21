@@ -1,9 +1,9 @@
-package com.upcprovision.calc.controller.provision;
+package com.upcprovision.calc.controller;
 
-import com.upcprovision.calc.security.CustomUserDetails;
-import com.upcprovision.calc.security.Role;
+import com.upcprovision.calc.security.user.CustomUserDetails;
+import com.upcprovision.calc.security.user.Role;
 import com.upcprovision.calc.services.provision.DealsServices;
-import com.upcprovision.calc.services.provision.ProvisionTotal;
+import com.upcprovision.calc.services.provision.ProvisionCalculatorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,14 +14,13 @@ import java.util.Set;
 
 @Service
 public class ControllerServices {
-
     @Autowired
-    public ControllerServices(ProvisionTotal provisionTotal, DealsServices dealsServices) {
-        this.provisionTotal = provisionTotal;
+    public ControllerServices(ProvisionCalculatorServices provisionCalculatorServices, DealsServices dealsServices) {
+        this.provisionCalculatorServices = provisionCalculatorServices;
         this.dealsServices = dealsServices;
     }
 
-    private ProvisionTotal provisionTotal;
+    private ProvisionCalculatorServices provisionCalculatorServices;
     private DealsServices dealsServices;
 
     public String getUsername() {
@@ -29,13 +28,12 @@ public class ControllerServices {
         return user.getUsername();
     }
 
-    String setDealsAttribute(HttpSession session){
+    public String setDealsAttribute(HttpSession session) {
         session.setAttribute("list", dealsServices.getByLog(getUsername()));
         session.setAttribute("numerlog", getUsername());
-        session.setAttribute("total", provisionTotal.getTotalSales(provisionTotal.findAllByLog(getUsername())));
+        session.setAttribute("total", provisionCalculatorServices.getTotalSales(provisionCalculatorServices.findAllByLog(getUsername())));
         return "redirect:/app/getdealsdone";
     }
-
 
     public Set<Role> getUserAuth() {
         Set<Role> auth = new HashSet<>();
