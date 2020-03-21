@@ -2,8 +2,10 @@ package com.upcprovision.calc.dto;
 
 import com.upcprovision.calc.model.tickets.TicketStatus;
 import com.upcprovision.calc.security.user.CustomUserDetails;
+
 import lombok.Getter;
 import lombok.Setter;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.Serializable;
