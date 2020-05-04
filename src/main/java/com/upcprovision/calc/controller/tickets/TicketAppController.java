@@ -1,7 +1,7 @@
 package com.upcprovision.calc.controller.tickets;
 
 
-import com.upcprovision.calc.dto.TicketDTO;
+import com.upcprovision.calc.dto.TicketDto;
 import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;
 import com.upcprovision.calc.services.tickets.TicketServices;
@@ -46,12 +46,12 @@ public class TicketAppController {
 
     @GetMapping("/ticketapp/add")
     public String viewAddTicket(Model model){
-        model.addAttribute("ticket", new TicketDTO());
+        model.addAttribute("ticket", new TicketDto());
         return "ticket/add";
     }
 
     @PostMapping("/ticketapp/add")
-    public String addTicket(@ModelAttribute("ticket") TicketDTO ticketDto){
+    public String addTicket(@ModelAttribute("ticket") TicketDto ticketDto){
         ticketServices.addTicket(ticketDto);
         return "redirect:/ticketapp";
     }
@@ -60,20 +60,20 @@ public class TicketAppController {
     public String viewEdit(@PathVariable String x, HttpSession session, Model model) {
         Ticket oldTicket = ticketServices.getTicket(x).get(0);
         List<TicketStatus> statuses = oldTicket.getTicketStatuses();
-        model.addAttribute("ticket", new TicketDTO());
+        model.addAttribute("ticket", new TicketDto());
         session.setAttribute("statuses", statuses);
         session.setAttribute("oldTicket", oldTicket);
         session.setAttribute("ticketId", oldTicket.getId());
         session.setAttribute("statusUpdate", "");
-        session.setAttribute("ticket", new TicketDTO());
+        session.setAttribute("ticket", new TicketDto());
         return "ticket/viewticket";
     }
 
     @PostMapping("/ticketapp/addStatus")
-    public String editTicket(@ModelAttribute("ticket") TicketDTO modelTicket, HttpSession session,
+    public String editTicket(@ModelAttribute("ticket") TicketDto modelTicket, HttpSession session,
                              @SessionAttribute("statuses") List<TicketStatus> statuses) {
         String id = session.getAttribute("ticketId").toString();
-        TicketDTO ticketDTO = new TicketDTO(
+        TicketDto ticketDTO = new TicketDto(
                 modelTicket.isClosed(),
                 modelTicket.getCurrentGroup(),
                 modelTicket.getStatusUpdate());

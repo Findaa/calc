@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TicketDTO implements Serializable {
+public class TicketDto implements Serializable {
 
     private Long id;
     private ArrayList<TicketStatus> ticketStatuses;
@@ -25,10 +25,10 @@ public class TicketDTO implements Serializable {
     }
 
 
-    public TicketDTO() {
+    public TicketDto() {
     }
 
-    public TicketDTO(boolean closed, String currentGroup, String statusUpdate) {
+    public TicketDto(boolean closed, String currentGroup, String statusUpdate) {
         this.username = getAuthorityUsername();
         this.closed = closed;
         this.currentGroup = currentGroup;

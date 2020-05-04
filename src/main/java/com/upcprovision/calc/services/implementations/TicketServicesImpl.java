@@ -2,7 +2,7 @@ package com.upcprovision.calc.services.implementations;
 
 
 import com.upcprovision.calc.security.user.CustomUserDetails;
-import com.upcprovision.calc.dto.TicketDTO;
+import com.upcprovision.calc.dto.TicketDto;
 import com.upcprovision.calc.model.tickets.Ticket;
 import com.upcprovision.calc.model.tickets.TicketStatus;
 import com.upcprovision.calc.repos.TicketRepo;
@@ -35,11 +35,11 @@ public class TicketServicesImpl implements TicketServices {
     }
 
     @Override
-    public List<TicketDTO> processTicketList(List<Ticket> ticketList) {
-        List<TicketDTO> ticketDTOList = new ArrayList<>();
+    public List<TicketDto> processTicketList(List<Ticket> ticketList) {
+        List<TicketDto> ticketDTOList = new ArrayList<>();
 
         ticketList.forEach(ticket -> {
-            TicketDTO ticketDto = new TicketDTO();
+            TicketDto ticketDto = new TicketDto();
             ArrayList<TicketStatus> ticketStatuses = ticket.getTicketStatuses();
             TicketStatus status = ticketStatuses.get(ticketStatuses.size() - 1);
             ticketDto.setId(ticket.getId());
@@ -139,7 +139,7 @@ public class TicketServicesImpl implements TicketServices {
     }
 
     @Override
-    public void addTicket(TicketDTO ticketDto) {
+    public void addTicket(TicketDto ticketDto) {
         TicketStatus ticketStatus = new TicketStatus();
         ArrayList<TicketStatus> list = new ArrayList<>();
         ticketStatus.setUsername(getUsername());
@@ -150,13 +150,13 @@ public class TicketServicesImpl implements TicketServices {
     }
 
     @Override
-    public TicketDTO editTicket(TicketDTO ticketDto) {
+    public TicketDto editTicket(TicketDto ticketDto) {
         return null;
     }
 
 
     @Override
-    public void addStatus(TicketDTO ticketDTO, int id) {
+    public void addStatus(TicketDto ticketDTO, int id) {
         Ticket ticket = ticketRepo.findAllById((long) id);
         ArrayList<TicketStatus> statuses = ticket.getTicketStatuses();
         TicketStatus ticketStatus =
