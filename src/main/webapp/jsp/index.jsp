@@ -17,7 +17,7 @@
     <input type="submit" value="Wyloguj"></form:form>
 
 
-        <form:form method="get" action="/app">
+        <form:form method="get" action="app">
         <input type="submit" value="Aplikacja Sprzedazowa"> <br/>
         </form:form><br/>
         <form:form method="get" action="ticketapp">

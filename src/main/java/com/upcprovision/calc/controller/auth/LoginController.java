@@ -27,10 +27,10 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
-    public String viewLogin() { return "login"; }
+    public String viewLogin() { return "/login"; }
 
     @GetMapping("/app")
-    public String viewApp() { return "provision/app"; }
+    public String viewApp() { return "/provision/app"; }
 
     @RequestMapping("/leader/logout")
     public String viewLeaderLogout(HttpServletRequest rq, HttpServletResponse re) {
@@ -52,6 +52,6 @@ public class LoginController {
     @GetMapping("/oauthLogin")
     public String fbLogin()
     {
-        return "fblogin";
+        return "/fblogin";
     }
 }

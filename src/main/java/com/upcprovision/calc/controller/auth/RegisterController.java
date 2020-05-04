@@ -39,7 +39,7 @@ public class RegisterController {
     @GetMapping("/register")
     public String viewRegister(Model model) {
         model.addAttribute("user", new UserDTO());
-        return "register";
+        return "/register";
     }
 
     @GetMapping("/active")
@@ -47,7 +47,7 @@ public class RegisterController {
         model.addAttribute("user", new UserDTO());
         registerServices.activate(token);
         model.addAttribute("x", "registered");
-        return "register";
+        return "/register";
     }
 
     @PostMapping("/register")
@@ -73,12 +73,12 @@ public class RegisterController {
         }
 
         System.out.println(" test role w/o ");
-        return "register";
+        return "/register";
     }
 
     @GetMapping("/registered")
     public String viewRegistered() {
-        return "registered";
+        return "/registered";
     }
 }
 

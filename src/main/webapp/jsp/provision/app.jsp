@@ -13,31 +13,31 @@
 <body>
 <div class="tt">
 
-    <form:form method="get" action="/app/getdeals">
+    <form:form method="get" action="app/getdeals">
         <input type="submit" value="Obecna Prowizja">
     </form:form><br/>
 
-    <form:form method="get" action="/targetadd">
+    <form:form method="get" action="targetadd">
         <input type="submit" value="Prowizja na podstawie targetu">
     </form:form><br/>
 
-    <form:form method="get" action="/app/useradd">
+    <form:form method="get" action="app/useradd">
     <input type="submit" value="Dodaj Sprzedaż">
 </form:form><br/>
 
-    <form:form method="get" action="/ticketapp">
+    <form:form method="get" action="ticketapp">
         <input type="submit" value="Aplikacja Ticketowa">
     </form:form><br/>
 
 <sec:authorize access="hasAnyRole('ROLE_LEADER')">
-    <form:form method="get" action="/leader/app">
+    <form:form method="get" action="leader/app">
         <input type="submit" value="Aplikacja dla leaderów">
     </form:form><br/>
 </sec:authorize>
 </div>
 <div class="logout">
     <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_LEADER')">
-        <form:form method="post" action="/logout">
+        <form:form method="post" action="logout">
             <input type="submit" value="Wyloguj"></form:form>
     </sec:authorize>
 </div>

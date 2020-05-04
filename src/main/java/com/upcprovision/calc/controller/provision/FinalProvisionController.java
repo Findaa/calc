@@ -31,7 +31,7 @@ public class FinalProvisionController {
         } catch (NullPointerException e) {
             model.addAttribute("total", 0);
         }
-        return "provision/targetadd";
+        return "/provision/targetadd";
     }
 
     @PostMapping("/targetadd")
@@ -44,6 +44,6 @@ public class FinalProvisionController {
 
     @GetMapping("/provision")
     public String getProvision() {
-        return "provision/provision";
+        return "/provision/provision";
     }
 }

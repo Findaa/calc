@@ -26,7 +26,7 @@ public class TicketAppController {
     @GetMapping("/ticketapp")
     public String viewIndex(Model model){
         model.addAttribute("id", new String());
-        return "ticket/app";
+        return "/ticket/app";
     }
 
     @PostMapping("/ticketapp/view")
@@ -47,7 +47,7 @@ public class TicketAppController {
     @GetMapping("/ticketapp/add")
     public String viewAddTicket(Model model){
         model.addAttribute("ticket", new TicketDto());
-        return "ticket/add";
+        return "/ticket/add";
     }
 
     @PostMapping("/ticketapp/add")
@@ -66,7 +66,7 @@ public class TicketAppController {
         session.setAttribute("ticketId", oldTicket.getId());
         session.setAttribute("statusUpdate", "");
         session.setAttribute("ticket", new TicketDto());
-        return "ticket/viewticket";
+        return "/ticket/viewticket";
     }
 
     @PostMapping("/ticketapp/addStatus")

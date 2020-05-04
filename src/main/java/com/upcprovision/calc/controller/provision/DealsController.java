@@ -52,7 +52,7 @@ public class DealsController {
 
     @GetMapping("/app/dealslist")
     public String getDealsDone() {
-        return "provision/getdealsdone";
+        return "/provision/getdealsdone";
     }
 
     @GetMapping("/app/getdealsdone/edit/{x}")
@@ -64,7 +64,7 @@ public class DealsController {
         model.addAttribute("deletedeal", new String());
         session.setAttribute("id", id.toString());
         session.setAttribute("olddeal", olddeal);
-        return "provision/edit";
+        return "/provision/edit";
     }
 
     @PostMapping("/app/edit")
@@ -94,6 +94,6 @@ public class DealsController {
 
     @GetMapping("/app/edited")
     public String viewEdited() {
-        return "provision/edited";
+        return "/provision/edited";
     }
 }
