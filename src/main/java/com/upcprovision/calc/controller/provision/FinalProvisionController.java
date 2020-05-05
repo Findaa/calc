@@ -3,7 +3,6 @@ package com.upcprovision.calc.controller.provision;
 import com.upcprovision.calc.controller.ControllerServices;
 import com.upcprovision.calc.model.provision.Target;
 import com.upcprovision.calc.services.provision.ProvisionCalculatorServices;
-import com.upcprovision.calc.services.provision.ProvisionCalculatorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +30,7 @@ public class FinalProvisionController {
         } catch (NullPointerException e) {
             model.addAttribute("total", 0);
         }
-        return "/provision/targetadd";
+        return "provision/targetadd";
     }
 
     @PostMapping("/targetadd")
@@ -44,6 +43,6 @@ public class FinalProvisionController {
 
     @GetMapping("/provision")
     public String getProvision() {
-        return "/provision/provision";
+        return "provision/provision";
     }
 }

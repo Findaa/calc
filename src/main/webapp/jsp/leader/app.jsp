@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="tt">
-    <form:form method="get" action="/app/">
+    <form:form method="get" action="/app">
         <input type="submit" value="Wersja dla Uzytkownika">
     </form:form><br/>
 

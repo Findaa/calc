@@ -12,16 +12,16 @@ import java.security.Principal;
 public class MainController {
 
     @GetMapping("/index")
-    public String viewIndex() { return "/index"; }
+    public String viewIndex() { return "index"; }
 
     @GetMapping("/")
-    public String viewIndexFromMain() { return "/index"; }
+    public String viewIndexFromMain() { return "index"; }
 
     @GetMapping("/error")
-    public String viewError() { return "/error"; }
+    public String viewError() { return "error"; }
 
     @GetMapping("/403")
-    public String view403() { return "/403"; }
+    public String view403() { return "403"; }
 
     @GetMapping("/provisionapp")
     public String getProvApp(){

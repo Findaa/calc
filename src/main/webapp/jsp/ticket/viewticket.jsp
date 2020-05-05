@@ -32,7 +32,6 @@
                 <c:forEach items="${statuses}" var="status">
                     <tr><td>${status.username}, ${status.date}</td>
                         <td> ${status.statusUpdate}</td></tr>
-                    <c:if test=""
                 </c:forEach>
             </table>
             <input type="submit" value="Dodaj wpis"/>

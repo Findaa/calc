@@ -37,7 +37,7 @@ public class LeaderController {
 
     @GetMapping("/leader/app")
     public String viewLeaderapp() {
-        return "/leader/app";
+        return "leader/app";
     }
 
     @GetMapping("/leader/getdatabase")
@@ -56,7 +56,7 @@ public class LeaderController {
 
     @GetMapping("/leader/getdealsdone")
     public String getDealsDone() {
-        return "/leader/getdealsdone";
+        return "leader/getdealsdone";
     }
 
     @PostMapping("/leader/getteam")
@@ -70,7 +70,7 @@ public class LeaderController {
 
     @GetMapping("/leader/teamresult")
     public String viewTeamSales(){
-        return "/leader/teamresult";
+        return "leader/teamresult";
     }
 
 

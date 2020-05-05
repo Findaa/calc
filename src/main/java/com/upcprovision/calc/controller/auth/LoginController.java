@@ -30,7 +30,9 @@ public class LoginController {
     public String viewLogin() { return "/login"; }
 
     @GetMapping("/app")
-    public String viewApp() { return "/provision/app"; }
+    public String viewApp() { return "provision/app"; }
+
+
 
     @RequestMapping("/leader/logout")
     public String viewLeaderLogout(HttpServletRequest rq, HttpServletResponse re) {
@@ -49,9 +51,4 @@ public class LoginController {
         return "redirect:/index";
     }
 
-    @GetMapping("/oauthLogin")
-    public String fbLogin()
-    {
-        return "/fblogin";
-    }
 }
