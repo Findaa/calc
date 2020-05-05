@@ -17,6 +17,11 @@ public class MainController {
     @GetMapping("/")
     public String viewIndexFromMain() { return "index"; }
 
+    @GetMapping("")
+    public String viewIndexEmptyAddress(){
+        return "index";
+    }
+
     @GetMapping("/error")
     public String viewError() { return "error"; }
 
